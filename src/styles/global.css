@@ -175,76 +175,59 @@
                 background 0.35s ease, border-color 0.35s ease, color 0.35s ease;
   }
   .btn:active { transform: translateY(0) scale(0.97) !important; transition-duration: 0.1s; }
-  .btn::before {
-    content: ""; position: absolute; inset: 0;
-    background: linear-gradient(110deg, transparent 25%, rgb(255 255 255 / 0.32) 50%, transparent 75%);
-    transform: translateX(-120%);
-    transition: transform 0.9s cubic-bezier(0.4,0,0.2,1);
-    pointer-events: none; z-index: 1;
-  }
-  .btn:hover::before { transform: translateX(120%); }
   .btn > * { position: relative; z-index: 2; }
-  .btn svg:last-child:not(:first-child) { transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1); }
+  .btn svg:last-child:not(:first-child) { transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
   .btn:hover svg:last-child:not(:first-child) { transform: translateX(3px); }
 
+  /* Flat, slightly translucent buttons — no gradient, no inset, light shadow */
   /* RED — primary CTA */
   .btn-primary {
-    background: linear-gradient(180deg, #E11D3A 0%, #C8102E 52%, #A50C24 100%);
+    background: rgb(var(--rgb-red) / 0.9);
     color: #fff;
-    border-color: rgb(255 255 255 / 0.18);
-    box-shadow: 0 1px 2px rgb(126 10 27 / 0.5), 0 12px 28px -8px rgb(var(--rgb-red) / 0.55), inset 0 1px 0 0 rgb(255 255 255 / 0.3);
+    border-color: rgb(var(--rgb-red) / 0.35);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 6px 16px -8px rgb(var(--rgb-red) / 0.45);
   }
-  .btn-primary:hover {
-    transform: translateY(-3px) scale(1.02);
-    background: linear-gradient(180deg, #EC2A46 0%, #D4142F 52%, #B30D27 100%);
-    box-shadow: 0 8px 16px rgb(126 10 27 / 0.4), 0 26px 52px -12px rgb(var(--rgb-red) / 0.7), inset 0 1px 0 0 rgb(255 255 255 / 0.45);
-  }
+  .btn-primary:hover { transform: translateY(-2px); background: rgb(var(--rgb-red) / 1); box-shadow: 0 10px 22px -8px rgb(var(--rgb-red) / 0.55); }
 
-  /* NAVY — deep brand navy */
+  /* NAVY */
   .btn-navy {
-    background: linear-gradient(180deg, #14365A 0%, #0A1929 55%, #07111E 100%);
+    background: rgb(var(--rgb-navy) / 0.88);
     color: #fff;
-    border-color: rgb(255 255 255 / 0.12);
-    box-shadow: 0 1px 2px rgb(5 11 20 / 0.5), 0 12px 26px -8px rgb(7 17 30 / 0.55), inset 0 1px 0 0 rgb(255 255 255 / 0.12);
+    border-color: rgb(var(--rgb-navy) / 0.25);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 6px 16px -8px rgb(7 17 30 / 0.4);
   }
-  .btn-navy:hover {
-    transform: translateY(-3px) scale(1.02);
-    border-color: rgb(var(--rgb-red) / 0.6);
-    background: linear-gradient(180deg, #1B4470 0%, #0E2440 55%, #0A1929 100%);
-    box-shadow: 0 8px 16px rgb(5 11 20 / 0.35), 0 26px 52px -14px rgb(5 11 20 / 0.7), 0 0 0 1px rgb(var(--rgb-red) / 0.2), inset 0 1px 0 0 rgb(255 255 255 / 0.16);
-  }
+  .btn-navy:hover { transform: translateY(-2px); background: rgb(var(--rgb-navy) / 1); border-color: rgb(var(--rgb-red) / 0.5); box-shadow: 0 10px 22px -8px rgb(5 11 20 / 0.45); }
 
-  /* OUTLINE — navy outline on light surfaces */
+  /* OUTLINE — navy hairline on light */
   .btn-outline {
-    background: rgb(var(--rgb-navy) / 0.03);
+    background: rgb(var(--rgb-navy) / 0.04);
     color: rgb(var(--rgb-navy));
-    border-color: rgb(var(--rgb-navy) / 0.18);
+    border-color: rgb(var(--rgb-navy) / 0.2);
   }
-  .btn-outline:hover {
-    background: linear-gradient(180deg, #14365A 0%, #0A1929 100%);
-    color: #fff; border-color: rgb(var(--rgb-navy));
-    transform: translateY(-2px) scale(1.02);
-  }
+  .btn-outline:hover { background: rgb(var(--rgb-navy) / 0.9); color: #fff; border-color: transparent; transform: translateY(-2px); }
 
-  /* LIGHT — crisp white (on dark/photo) */
+  /* LIGHT — translucent white (on dark/photo) */
   .btn-light {
-    background: linear-gradient(180deg, #FFFFFF 0%, #EEF1F6 100%);
+    background: rgb(255 255 255 / 0.92);
     color: rgb(var(--rgb-navy));
-    border-color: rgb(0 0 0 / 0.06);
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.08), 0 10px 24px -8px rgb(5 11 20 / 0.3), inset 0 1px 0 0 rgb(255 255 255 / 0.9);
+    border-color: rgb(255 255 255 / 0.4);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 6px 16px -8px rgb(5 11 20 / 0.3);
   }
-  .btn-light:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 16px rgb(0 0 0 / 0.12), 0 24px 48px -12px rgb(5 11 20 / 0.4), inset 0 1px 0 0 rgb(255 255 255 / 1); }
+  .btn-light:hover { transform: translateY(-2px); background: rgb(255 255 255 / 1); box-shadow: 0 10px 22px -10px rgb(5 11 20 / 0.4); }
 
   /* GLASS — over photography */
   .btn-glass {
-    background: linear-gradient(180deg, rgb(255 255 255 / 0.18) 0%, rgb(255 255 255 / 0.07) 100%);
+    background: rgb(255 255 255 / 0.12);
     color: #fff;
     border: 1px solid rgb(255 255 255 / 0.3);
-    backdrop-filter: blur(22px) saturate(180%);
-    -webkit-backdrop-filter: blur(22px) saturate(180%);
-    box-shadow: 0 1px 2px rgb(0 0 0 / 0.2), 0 14px 36px -10px rgb(0 0 0 / 0.45), inset 0 1px 0 0 rgb(255 255 255 / 0.3);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    box-shadow: 0 8px 24px -14px rgb(0 0 0 / 0.4);
   }
-  .btn-glass:hover { transform: translateY(-3px) scale(1.02); background: linear-gradient(180deg, rgb(255 255 255 / 0.26) 0%, rgb(255 255 255 / 0.11) 100%); border-color: rgb(255 255 255 / 0.5); }
+  .btn-glass:hover { transform: translateY(-2px); background: rgb(255 255 255 / 0.2); border-color: rgb(255 255 255 / 0.5); }
 
   /* GHOST — subtle on dark */
   .btn-ghost {
@@ -253,23 +236,24 @@
     border-color: rgb(255 255 255 / 0.18);
     backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
   }
-  .btn-ghost:hover { background: rgb(255 255 255 / 0.14); border-color: rgb(255 255 255 / 0.32); transform: translateY(-2px) scale(1.02); }
+  .btn-ghost:hover { background: rgb(255 255 255 / 0.14); border-color: rgb(255 255 255 / 0.32); transform: translateY(-2px); }
 
   /* WHATSAPP */
   .btn-whatsapp {
-    background: linear-gradient(180deg, #2BD37F 0%, #1FA968 55%, #1A9A5E 100%);
+    background: rgb(31 169 104 / 0.92);
     color: #fff; border-color: rgb(255 255 255 / 0.22);
-    box-shadow: 0 1px 2px rgb(26 154 94 / 0.5), 0 10px 24px -6px rgb(26 154 94 / 0.5), inset 0 1px 0 0 rgb(255 255 255 / 0.3);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 6px 16px -8px rgb(26 154 94 / 0.45);
   }
-  .btn-whatsapp:hover { transform: translateY(-3px) scale(1.02); background: linear-gradient(180deg, #34E08A 0%, #25B873 55%, #1FA866 100%); box-shadow: 0 8px 16px rgb(26 154 94 / 0.5), 0 28px 56px -12px rgb(26 154 94 / 0.75); }
+  .btn-whatsapp:hover { transform: translateY(-2px); background: rgb(37 184 115 / 1); box-shadow: 0 10px 22px -8px rgb(26 154 94 / 0.55); }
 
-  /* GOLD — ultra-premium tier accent button */
+  /* GOLD — ultra-premium accent */
   .btn-gold {
-    background: linear-gradient(180deg, #E7C969 0%, #D4AF37 52%, #B5912A 100%);
-    color: #1A1407; border-color: rgb(255 255 255 / 0.3);
-    box-shadow: 0 1px 2px rgb(138 109 23 / 0.5), 0 12px 28px -8px rgb(var(--rgb-gold) / 0.5), inset 0 1px 0 0 rgb(255 255 255 / 0.45);
+    background: rgb(var(--rgb-gold) / 0.95);
+    color: #1A1407; border-color: rgb(255 255 255 / 0.35);
+    box-shadow: 0 6px 16px -8px rgb(var(--rgb-gold) / 0.5);
   }
-  .btn-gold:hover { transform: translateY(-3px) scale(1.02); background: linear-gradient(180deg, #F0D67E 0%, #DDB942 52%, #C49B30 100%); }
+  .btn-gold:hover { transform: translateY(-2px); background: rgb(var(--rgb-gold) / 1); box-shadow: 0 10px 22px -8px rgb(var(--rgb-gold) / 0.6); }
 
   .btn-sm { padding: 0.55rem 1rem; font-size: 0.83rem; }
   .btn-lg { padding: 0.92rem 1.75rem; font-size: 0.98rem; }
@@ -521,7 +505,7 @@
     transition: color 0.25s ease, background 0.25s ease;
   }
   .nav-pill:hover { color: rgb(var(--rgb-navy)); background: rgb(var(--rgb-navy) / 0.05); }
-  .nav-pill.active { color: #fff; font-weight: 700; background: linear-gradient(180deg, #E11D3A 0%, #C8102E 100%); }
+  .nav-pill.active { color: #fff; font-weight: 700; background: rgb(var(--rgb-red) / 0.92); }
 
   /* footer underline link */
   .nav-link { position: relative; color: rgb(var(--rgb-muted)); font-weight: 500; transition: color 0.2s ease; }
