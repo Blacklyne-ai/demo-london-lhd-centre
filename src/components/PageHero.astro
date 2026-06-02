@@ -10,36 +10,60 @@ interface Props {
   secondary?: { href: string; label: string };
 }
 const { eyebrow, title, subtitle, image, crumb, primary, secondary } = Astro.props;
+// Allow titles with an *italic* segment via "**" markers (simple convention).
+// e.g. "Buying *Left Hand Drive* cars in the UK"
+const renderTitle = (t: string) => t.split(/\*([^*]+)\*/g);
+const titleParts = renderTitle(title);
 ---
-<section class="section-navy relative overflow-hidden pt-32 pb-14 md:pt-40 md:pb-20">
+<section class="relative bg-navy-ink overflow-hidden pt-32 lg:pt-44 pb-20 lg:pb-28">
   {image && (
     <>
-      <img src={image} alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-30" loading="eager" />
-      <div class="absolute inset-0 hero-overlay"></div>
+      <img src={image} alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-35" loading="eager" />
+      <div class="absolute inset-0" style="background: linear-gradient(120deg, rgb(5 11 20 / 0.92) 0%, rgb(5 11 20 / 0.55) 50%, rgb(5 11 20 / 0.85) 100%);"></div>
     </>
   )}
-  <div class="absolute inset-0 hero-mesh opacity-70"></div>
-  <div class="glow-orb" style="width: 380px; height: 380px; top: -100px; right: -60px; background: #C8102E; opacity: 0.16;"></div>
-  <div class="glow-orb" style="width: 320px; height: 320px; bottom: -120px; left: -70px; background: #4F89C2; opacity: 0.22;"></div>
+  {!image && (
+    <>
+      <div class="absolute inset-0" style="background: radial-gradient(80% 100% at 20% 30%, rgb(20 54 90 / 0.5) 0%, transparent 60%), linear-gradient(180deg, rgb(7 17 30) 0%, rgb(5 11 20) 100%);"></div>
+    </>
+  )}
+  <div class="absolute inset-0" style="background: radial-gradient(60% 80% at 18% 50%, rgb(200 16 46 / 0.1) 0%, transparent 60%);"></div>
 
   <div class="container-mcp relative z-10">
-    <nav class="flex items-center gap-2 text-[0.78rem] text-white/55 mb-6 fade-in" aria-label="Breadcrumb">
-      <a href="/" class="hover:text-red-bright transition">Home</a>
-      <Icon name="ChevronRight" size={13} strokeWidth={2.4} />
-      <span class="text-white/80">{crumb ?? title}</span>
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-[0.66rem] font-mono uppercase tracking-[0.22em] text-white/45 mb-14 fade-in" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-white transition">Home</a>
+      <Icon name="ChevronRight" size={11} strokeWidth={2.4} />
+      <span class="text-white/70">{crumb ?? title.replace(/\*/g, '')}</span>
     </nav>
-    {eyebrow && <span class="eyebrow eyebrow-light mb-5 fade-in">{eyebrow}</span>}
-    <h1 class="heading-xl text-white text-balance max-w-4xl fade-in stagger-1">{title}</h1>
-    {subtitle && <p class="text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl mt-6 text-pretty fade-in stagger-2">{subtitle}</p>}
+
+    {eyebrow && (
+      <div class="fade-in stagger-1 mb-10">
+        <span class="ed-eyebrow ed-eyebrow-light">{eyebrow}</span>
+      </div>
+    )}
+
+    <h1 class="ed-heading ed-heading-light text-balance max-w-5xl fade-in stagger-2" style="font-size: clamp(2.5rem, 6vw, 5.5rem);">
+      {titleParts.map((part, i) => (i % 2 === 1 ? <em>{part}</em> : <span>{part}</span>))}
+    </h1>
+
+    {subtitle && (
+      <p class="text-lg lg:text-xl text-white/70 leading-relaxed max-w-2xl mt-8 lg:mt-10 text-pretty fade-in stagger-3">{subtitle}</p>
+    )}
+
     {(primary || secondary) && (
-      <div class="flex flex-col sm:flex-row gap-3 mt-9 fade-in stagger-3">
+      <div class="flex flex-wrap items-center gap-x-10 gap-y-5 mt-12 fade-in stagger-4">
         {primary && (
-          <a href={primary.href} class="btn btn-primary btn-lg">
+          <a href={primary.href} class="ed-cta ed-cta-light">
             {primary.label}
-            <Icon name="ArrowRight" size={16} strokeWidth={2.5} />
+            <span class="ed-cta-arrow"><Icon name="ArrowRight" size={16} strokeWidth={2.2} /></span>
           </a>
         )}
-        {secondary && <a href={secondary.href} class="btn btn-glass btn-lg">{secondary.label}</a>}
+        {secondary && (
+          <a href={secondary.href} class="text-white/75 hover:text-white text-sm font-medium border-b border-white/30 hover:border-white pb-1 transition-all inline-flex items-center gap-2">
+            {secondary.label}
+          </a>
+        )}
       </div>
     )}
   </div>

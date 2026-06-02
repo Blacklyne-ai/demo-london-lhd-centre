@@ -1,40 +1,27 @@
 ---
 import Icon from './Icon.astro';
-import { site, telLandline, telMobile, whatsappLink } from '../data/site';
+import { site, telLandline, whatsappLink } from '../data/site';
 interface Props { title?: string; text?: string; }
 const {
-  title = 'Looking for an LHD car — or want to sell yours?',
-  text = 'Whether you are buying or selling, we provide the best possible service. Call us, message us on WhatsApp, or drop in to Barnes or Chelsea Harbour.',
+  title = 'Looking for an LHD car<br />or want to *sell yours*?',
+  text = 'Call, WhatsApp or email — our team is here Monday to Friday. Visit Barnes or Chelsea Harbour by appointment.',
 } = Astro.props;
+// Strip pseudo-markdown italics + line break for accessible plaintext
 ---
-<section class="section-navy py-20 md:py-24 relative overflow-hidden">
-  <div class="glow-orb" style="width: 420px; height: 420px; top: -120px; right: -80px; background: #C8102E; opacity: 0.18;"></div>
-  <div class="glow-orb" style="width: 380px; height: 380px; bottom: -140px; left: -90px; background: #4F89C2; opacity: 0.3;"></div>
-  <div class="container-mcp relative">
-    <div class="max-w-3xl fade-in">
-      <span class="eyebrow eyebrow-light mb-5">Get in touch</span>
-      <h2 class="heading-lg text-white text-balance mb-5">{title}</h2>
-      <p class="text-lg text-white/70 leading-relaxed mb-8 max-w-2xl text-pretty">{text}</p>
-      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-        <a href={telLandline} class="btn btn-primary btn-lg">
-          <Icon name="Phone" size={17} strokeWidth={2.3} />
-          {site.phoneLandline}
-        </a>
-        <a href={telMobile} class="btn btn-light btn-lg">
-          <Icon name="Phone" size={17} strokeWidth={2.3} />
-          {site.phoneMobile}
-        </a>
-        <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg">
-          <Icon name="MessageCircle" size={18} strokeWidth={2.2} />
-          WhatsApp
-        </a>
+<section class="relative bg-navy-ink overflow-hidden">
+  <img src="/images/home-2.jpg" alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-25" loading="lazy" />
+  <div class="absolute inset-0" style="background: linear-gradient(120deg, rgb(5 11 20 / 0.93) 0%, rgb(5 11 20 / 0.72) 60%, rgb(5 11 20 / 0.92) 100%);"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(60% 80% at 20% 50%, rgb(200 16 46 / 0.14) 0%, transparent 60%);"></div>
+  <div class="container-mcp relative py-24 md:py-32">
+    <div class="max-w-4xl">
+      <span class="ed-eyebrow ed-eyebrow-light mb-8">Get in touch</span>
+      <h2 class="ed-heading ed-heading-light text-balance mt-5 mb-8" style="font-size: clamp(2.25rem, 5.5vw, 5rem);" set:html={title.replace(/\*([^*]+)\*/g, '<em>$1</em>')}></h2>
+      <p class="text-white/70 text-lg leading-relaxed max-w-xl mb-12 text-pretty">{text}</p>
+      <div class="flex flex-wrap items-center gap-x-10 gap-y-6">
+        <a href={telLandline} class="ed-cta ed-cta-light">{site.phoneLandline}<span class="ed-cta-arrow"><Icon name="Phone" size={15} strokeWidth={2.2} /></span></a>
+        <a href={whatsappLink} target="_blank" rel="noopener" class="ed-cta ed-cta-light">WhatsApp<span class="ed-cta-arrow"><Icon name="MessageCircle" size={15} strokeWidth={2.2} /></span></a>
+        <a href="/lhd-contact-us" class="ed-cta ed-cta-light">Visit us<span class="ed-cta-arrow"><Icon name="ArrowRight" size={15} strokeWidth={2.2} /></span></a>
       </div>
-      <p class="text-sm text-white/45 mt-6 flex flex-wrap items-center gap-x-2 gap-y-1">
-        <Icon name="MapPin" size={15} strokeWidth={2} />
-        76 Glentham Road, Barnes SW13 9JJ
-        <span class="opacity-40">·</span>
-        Chelsea Harbour, London SW10 0XG
-      </p>
     </div>
   </div>
 </section>

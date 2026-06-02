@@ -11,11 +11,11 @@ const specs = [
   v.year ? String(v.year) : null,
   v.fuel,
   v.transmission ? (v.transmission.startsWith('Auto') ? 'Automatic' : 'Manual') : null,
-  v.body,
 ].filter(Boolean);
+const modelName = v.title.replace(new RegExp(`^${v.brand}\\s+`, 'i'), '');
 ---
 <article
-  class={`vehicle-card group fade-in stagger-${(index % 4) + 1} ${v.tier === 'ultra' ? 'tier-ultra' : ''}`}
+  class={`ed-vehicle group fade-in stagger-${(index % 4) + 1} ${v.tier === 'ultra' ? 'tier-ultra' : ''}`}
   data-brand={v.brand}
   data-status={v.status}
   data-body={v.body || ''}
@@ -25,30 +25,29 @@ const specs = [
   data-year={v.year ?? ''}
   data-title={v.title}
 >
-  <a href={href} class="vehicle-media block" aria-label={`View ${v.title}`}>
-    <img src={v.image} alt={`Left-hand drive ${v.title}`} width="640" height="480" loading={eager ? 'eager' : 'lazy'} />
-    {v.tier === 'ultra' && <span class="badge badge-tier absolute top-3 left-3">Ultra-premium</span>}
-    <span class={`badge absolute top-3 right-3 ${v.status === 'sold' ? 'badge-sold' : v.status === 'call' ? 'badge-call' : 'badge-available'}`}>
-      {v.status === 'sold' ? 'Sold' : v.status === 'call' ? 'Call us' : 'Available'}
-    </span>
-  </a>
-  <div class="p-4 md:p-5 flex flex-col flex-1">
-    <div class="flex items-center justify-between gap-2 mb-1.5">
-      <span class="text-[0.66rem] uppercase tracking-[0.14em] font-mono text-muted">{v.brand}</span>
-      <span class="text-[0.66rem] uppercase tracking-[0.12em] font-mono text-muted inline-flex items-center gap-1">
-        <Icon name="MapPin" size={11} strokeWidth={2.2} />{v.location}
+  <a href={href} class="block" aria-label={`View ${v.title}`}>
+    <div class="ed-vehicle-media">
+      <img src={v.image} alt={`Left-hand drive ${v.title}`} width="700" height="525" loading={eager ? 'eager' : 'lazy'} />
+      <span class={`badge absolute top-3 left-3 ${v.status === 'sold' ? 'badge-sold' : v.status === 'call' ? 'badge-call' : 'badge-available'}`}>
+        {v.status === 'sold' ? 'Sold' : v.status === 'call' ? 'Call us' : 'Available'}
       </span>
+      {v.tier === 'ultra' && <span class="badge badge-tier absolute top-3 right-3">Ultra</span>}
     </div>
-    <a href={href}><h3 class="font-bold text-ink leading-snug text-[1rem] mb-2 hover:text-red-deep transition">{v.title}</h3></a>
-    <p class="text-[0.8rem] text-muted font-mono mb-4">{specs.join('  ·  ')}</p>
-    <div class="mt-auto flex items-center justify-between gap-2 pt-3 border-t border-line">
-      <span class={`price text-xl ${v.status === 'sold' ? 'price-sold' : v.status === 'call' ? 'price-call' : ''}`}>{priceLabel(v)}</span>
-      <div class="flex items-center gap-1.5">
-        <a href={wa} target="_blank" rel="noopener" class="inline-flex items-center justify-center w-9 h-9 rounded-full border border-line text-muted hover:text-red-deep hover:border-red/40 transition" aria-label={`Enquire about ${v.title} on WhatsApp`}>
-          <Icon name="MessageCircle" size={16} strokeWidth={2.2} />
-        </a>
-        <a href={href} class="btn btn-navy btn-sm">Details<Icon name="ArrowRight" size={14} strokeWidth={2.4} /></a>
-      </div>
+  </a>
+  <div class="ed-vehicle-meta mt-1">
+    <div>
+      <p class="text-[0.62rem] font-mono uppercase tracking-[0.22em] text-muted mb-1">{v.brand}{v.year ? ` · ${v.year}` : ''} · {v.location}</p>
+      <a href={href}><p class="font-display text-ink text-[1.05rem] leading-snug font-semibold group-hover:text-red-deep transition pr-2">{modelName}</p></a>
+      {specs.length > 0 && <p class="text-[0.8rem] text-muted font-mono mt-1.5">{specs.join('  ·  ')}</p>}
     </div>
+    <p class={`price text-lg whitespace-nowrap ${v.status === 'sold' ? 'price-sold' : v.status === 'call' ? 'price-call' : ''}`}>{priceLabel(v)}</p>
+  </div>
+  <div class="flex items-center gap-3 mt-4">
+    <a href={href} class="ed-cta" style="padding: 0.55rem 0; font-size: 0.66rem;">
+      Details<span class="ed-cta-arrow" style="width:30px;height:30px;"><Icon name="ArrowRight" size={13} strokeWidth={2.2} /></span>
+    </a>
+    <a href={wa} target="_blank" rel="noopener" class="ml-auto inline-flex items-center justify-center w-9 h-9 rounded-full border border-line text-muted hover:text-red-deep hover:border-red/40 transition" aria-label={`Enquire about ${v.title} on WhatsApp`}>
+      <Icon name="MessageCircle" size={14} strokeWidth={2.2} />
+    </a>
   </div>
 </article>
