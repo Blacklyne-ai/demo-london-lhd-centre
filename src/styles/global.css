@@ -506,8 +506,9 @@
 
   /* ════════ NAV (light glass pill) ════════ */
   .nav-pill {
-    position: relative; color: rgb(var(--rgb-navy) / 0.72); font-weight: 600; font-size: 0.9rem;
-    padding: 0.5rem 0.85rem; border-radius: 999px; transition: color 0.25s ease, background 0.25s ease;
+    position: relative; color: rgb(var(--rgb-navy) / 0.72); font-weight: 600; font-size: 0.875rem;
+    padding: 0.5rem 0.7rem; border-radius: 999px; white-space: nowrap;
+    transition: color 0.25s ease, background 0.25s ease;
   }
   .nav-pill:hover { color: rgb(var(--rgb-navy)); background: rgb(var(--rgb-navy) / 0.05); }
   .nav-pill.active { color: #fff; font-weight: 700; background: linear-gradient(180deg, #E11D3A 0%, #C8102E 100%); }

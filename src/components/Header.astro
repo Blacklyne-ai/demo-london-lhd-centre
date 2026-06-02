@@ -20,7 +20,7 @@ const isActive = (item: NavItem) =>
       <!-- Logo lockup: original LONDON wordmark + LHD CENTRE -->
       <a href="/" class="flex items-center gap-2.5 flex-shrink-0" aria-label={`${site.name} — home`}>
         <img src="/logo.png" alt="London LHD Centre" width="150" height="58" class="h-7 md:h-[1.9rem] w-auto" />
-        <span class="hidden sm:flex flex-col leading-none border-l border-navy/15 pl-2.5">
+        <span class="hidden sm:flex lg:hidden xl:flex flex-col leading-none border-l border-navy/15 pl-2.5">
           <span class="font-display font-extrabold text-navy text-[0.95rem] tracking-[-0.02em]">LHD CENTRE</span>
           <span class="text-[0.55rem] uppercase tracking-[0.22em] text-muted font-mono mt-0.5">Since 1995</span>
         </span>
@@ -71,17 +71,11 @@ const isActive = (item: NavItem) =>
 
       <!-- Right cluster -->
       <div class="flex items-center gap-2">
-        <!-- Dual live status (xl+) -->
-        <div class="hidden xl:flex items-center gap-1.5">
-          <span class="status-chip" title="Telephone enquiry hours">
-            <span class="status-dot status-dot-closed js-dot-phone"></span>
-            <span class="js-text-phone">Phones</span>
-          </span>
-          <span class="status-chip" title="Barnes showroom hours">
-            <span class="status-dot status-dot-closed js-dot-show"></span>
-            <span class="js-text-show">Showroom</span>
-          </span>
-        </div>
+        <!-- Live phone-line status (wide screens only — keeps the bar uncluttered) -->
+        <span class="status-chip hidden 2xl:inline-flex" title="Telephone enquiries · Mon to Fri, 9:30am to 5pm">
+          <span class="status-dot status-dot-closed js-dot-phone"></span>
+          <span class="js-text-phone">Phones</span>
+        </span>
 
         <!-- Search -->
         <div class="relative">
@@ -95,13 +89,9 @@ const isActive = (item: NavItem) =>
           </form>
         </div>
 
-        <a href={telLandline} class="btn btn-outline btn-sm hidden xl:inline-flex" aria-label={`Call our landline ${site.phoneLandline}`}>
+        <a href={telLandline} class="btn btn-primary btn-sm hidden lg:inline-flex whitespace-nowrap" aria-label={`Call us on ${site.phoneLandline}`}>
           <Icon name="Phone" size={14} strokeWidth={2.2} />
           {site.phoneLandline}
-        </a>
-        <a href={telMobile} class="btn btn-primary btn-sm hidden md:inline-flex" aria-label={`Call our mobile ${site.phoneMobile}`}>
-          <Icon name="Phone" size={14} strokeWidth={2.2} />
-          {site.phoneMobile}
         </a>
         <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm !px-3 hidden sm:inline-flex" aria-label="Message us on WhatsApp">
           <Icon name="MessageCircle" size={16} strokeWidth={2.2} />
@@ -166,7 +156,7 @@ const isActive = (item: NavItem) =>
   .nav-icon-btn:hover { color: #C8102E; border-color: rgba(200,16,46,0.4); background: rgba(200,16,46,0.06); }
 
   .status-chip {
-    display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.7rem; border-radius: 999px;
+    align-items: center; gap: 0.4rem; padding: 0.35rem 0.7rem; border-radius: 999px;
     font-size: 0.66rem; font-weight: 600; letter-spacing: 0.04em; font-family: var(--font-mono);
     background: rgba(10,25,41,0.04); border: 1px solid rgba(10,25,41,0.1); color: rgba(10,25,41,0.78); white-space: nowrap;
   }
