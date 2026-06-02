@@ -1,10 +1,17 @@
 ---
-// Typographic brand monogram badge. We deliberately do NOT reproduce
-// trademarked car-brand logos — a clean, consistent wordmark monogram
-// avoids any trademark issue while reading as a premium brand mark.
-interface Props { mark: string; tier?: string; size?: number; class?: string; }
-const { mark, tier = 'standard', size = 56, class: cls = '' } = Astro.props;
-const style = `width:${size}px;height:${size}px;font-size:${Math.round(size * 0.34)}px;` +
+// Brand mark. Renders the real manufacturer logo when a `slug` is given
+// (logos in /public/images/brands/<slug>.png), otherwise falls back to a
+// typographic monogram badge. Logos are the manufacturers' trademarks,
+// shown to indicate the marques we stock (standard dealer usage).
+interface Props { name?: string; slug?: string; mark?: string; tier?: string; size?: number; class?: string; }
+const { name = '', slug, mark = '', tier = 'standard', size = 56, class: cls = '' } = Astro.props;
+const badgeStyle = `width:${size}px;height:${size}px;font-size:${Math.round(size * 0.34)}px;` +
   (tier === 'ultra' ? 'color:var(--c-gold);border-color:rgba(212,175,55,0.5);' : '');
 ---
-<span class={`brand-badge ${cls}`} style={style} aria-hidden="true">{mark}</span>
+{slug ? (
+  <span class={`brand-logo ${cls}`} style={`width:${size}px;height:${size}px;`}>
+    <img src={`/images/brands/${slug}.png`} alt={name ? `${name} logo` : ''} loading="lazy" width={size} height={size} />
+  </span>
+) : (
+  <span class={`brand-badge ${cls}`} style={badgeStyle} aria-hidden="true">{mark}</span>
+)}

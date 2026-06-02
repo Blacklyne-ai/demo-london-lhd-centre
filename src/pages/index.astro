@@ -133,7 +133,7 @@ const fmt = (n: number) => n.toLocaleString('en-GB');
       <div class="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
         {activeBrands.map((b, i) => (
           <a href={`/lhd-cars-for-sale/${b.slug}`} class={`card !p-5 flex flex-col items-center justify-center text-center gap-3 group fade-in stagger-${(i % 5) + 1}`}>
-            <BrandMark mark={b.mark} tier={b.tier} size={52} />
+            <BrandMark slug={b.slug} name={b.name} tier={b.tier} size={60} />
             <span class="font-semibold text-ink text-[0.92rem] leading-tight group-hover:text-red-deep transition">{b.name}</span>
           </a>
         ))}

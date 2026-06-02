@@ -338,7 +338,7 @@
   .price-call { color: rgb(var(--rgb-gold-deep)); }
   .price-sold { color: rgb(var(--rgb-red-deep)); }
 
-  /* brand monogram mark */
+  /* brand monogram mark (fallback) */
   .brand-badge {
     display: inline-flex; align-items: center; justify-content: center;
     font-family: var(--font-display); font-weight: 900; letter-spacing: -0.02em;
@@ -346,6 +346,16 @@
     border: 1px solid rgb(var(--rgb-border)); border-radius: 16px;
     transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), border-color 0.3s ease, box-shadow 0.4s ease, color 0.3s ease;
   }
+
+  /* real brand logo tile */
+  .brand-logo {
+    display: inline-flex; align-items: center; justify-content: center; overflow: hidden;
+    background: linear-gradient(180deg, #FFFFFF, #F3F5F9);
+    border: 1px solid rgb(var(--rgb-border)); border-radius: 16px;
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), border-color 0.3s ease, box-shadow 0.4s ease;
+  }
+  .brand-logo img { width: 70%; height: 70%; object-fit: contain; }
+  .group:hover .brand-logo { border-color: rgb(var(--rgb-red) / 0.35); transform: translateY(-2px); box-shadow: var(--shadow-soft); }
 
   /* ════════ CARDS ════════ */
   .card {

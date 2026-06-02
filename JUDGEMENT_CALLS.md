@@ -26,8 +26,8 @@ The live site uses **both** "30 years" and "over 35 years" in different places. 
 ## 50 brands (the brief's "51")
 The original valuation list contained a **duplicate** (`SSANGYONG` and `Ssanyong`) which we merged to a single **"SsangYong"**, and normalised casing (e.g. `Infiniti`). The dropdown therefore offers **50 makes + "Other"** — covering every brand in the brief.
 
-## Brand "logos" — typographic monograms, not trademarks
-We deliberately do **not** reproduce trademarked car-brand logos (Audi rings, Ferrari Cavallino, etc.) — that is a legal/accuracy risk for a client site. Each brand is shown as a clean, consistent **typographic monogram badge**, which reads as a premium brand mark without infringing.
+## Brand logos — real manufacturer logos (per client request)
+Initially we used typographic monogram badges to avoid reproducing trademarks. **At the client's request we now display the real manufacturer logos** (Audi rings, Ferrari shield, Land Rover badge, etc.) on the homepage brand grid, the brand pages and the nav mega-menu. They were sourced from a public car-logos dataset and stored in `/public/images/brands/`. The logos remain the **trademarks of their respective manufacturers**, shown to indicate the marques we stock (standard dealer usage). The monogram badge is retained as an automatic fallback in `BrandMark.astro`. **Operator: confirm logo usage aligns with any manufacturer brand guidelines.**
 
 ## 15 active brand pages — 11 stocked, 4 "source to order"
 Brand pages exist for the 15 navigation brands. **Ferrari, Ford, Jaguar and Peugeot** have no live stock, so they show an honest **"we source to order — register your interest"** state rather than an empty grid. **Volvo, BMW and Rolls-Royce** appear in current stock but aren't among the 15 nav brands; their vehicle-detail pages exist and their breadcrumb links back to all-stock.

@@ -40,7 +40,7 @@ const isActive = (item: NavItem) =>
                 <div class="nav-mega-grid">
                   {activeBrands.map((b) => (
                     <a href={`/lhd-cars-for-sale/${b.slug}`} role="menuitem" class="nav-mega-item">
-                      <span class={`nav-mega-mark ${b.tier === 'ultra' ? 'is-ultra' : ''}`}>{b.mark}</span>
+                      <span class="nav-mega-logo"><img src={`/images/brands/${b.slug}.png`} alt="" loading="lazy" /></span>
                       {b.name}
                     </a>
                   ))}
@@ -202,8 +202,8 @@ const isActive = (item: NavItem) =>
   .nav-mega-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.2rem; }
   .nav-mega-item { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.6rem; border-radius: 11px; font-size: 0.86rem; font-weight: 600; color: rgba(10,25,41,0.82); transition: background 0.2s ease, color 0.2s ease; }
   .nav-mega-item:hover { background: rgba(200,16,46,0.07); color: #A20C23; }
-  .nav-mega-mark { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(180deg,#fff,#F1F4F9); border: 1px solid var(--c-border); font-family: var(--font-display); font-weight: 800; font-size: 0.66rem; color: var(--c-navy); flex-shrink: 0; }
-  .nav-mega-mark.is-ultra { color: var(--c-gold); border-color: rgba(212,175,55,0.5); }
+  .nav-mega-logo { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 8px; background: #fff; border: 1px solid var(--c-border); flex-shrink: 0; overflow: hidden; }
+  .nav-mega-logo img { width: 74%; height: 74%; object-fit: contain; }
   .nav-mega-all { display: inline-flex; align-items: center; gap: 0.4rem; margin: 0.8rem 0.3rem 0; font-size: 0.82rem; font-weight: 700; color: #A20C23; }
   .nav-mega-all svg { transition: transform 0.3s ease; }
   .nav-mega-all:hover svg { transform: translateX(4px); }
