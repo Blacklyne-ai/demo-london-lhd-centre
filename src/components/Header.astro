@@ -1,5 +1,5 @@
 ---
-import { nav, telLandline, telMobile, whatsappLink, site } from '../data/site';
+import { nav, telLandline, telMobile, mailLink, whatsappLink, site } from '../data/site';
 import type { NavItem } from '../data/site';
 import { activeBrands } from '../data/brands';
 import Icon from './Icon.astro';
@@ -10,30 +10,42 @@ const isActive = (item: NavItem) =>
   (item.href !== '/' && current.startsWith(item.href));
 ---
 
-<header id="site-header" class="fixed top-0 left-0 right-0 z-50">
-  <div class="container-mcp pt-4 md:pt-6">
-    <div
-      id="nav-shell"
-      class="flex items-center justify-between gap-3 pl-4 pr-3 md:pl-5 md:pr-3 py-2.5 rounded-pill transition-all duration-500"
-      style="background: rgba(255,255,255,0.82); backdrop-filter: blur(20px) saturate(170%); -webkit-backdrop-filter: blur(20px) saturate(170%); border: 1px solid rgba(10,25,41,0.10); box-shadow: 0 1px 2px rgba(5,11,20,0.04), 0 8px 32px -8px rgba(10,25,41,0.18), inset 0 1px 0 0 rgba(255,255,255,0.7);"
-    >
-      <!-- Logo lockup: original LONDON wordmark + LHD CENTRE -->
-      <a href="/" class="flex items-center gap-2.5 flex-shrink-0" aria-label={`${site.name} — home`}>
-        <img src="/logo.png" alt="London LHD Centre" width="150" height="58" class="h-7 md:h-[1.9rem] w-auto" />
-        <span class="hidden sm:flex lg:hidden xl:flex flex-col leading-none border-l border-navy/15 pl-2.5">
-          <span class="font-display font-extrabold text-navy text-[0.95rem] tracking-[-0.02em]">LHD CENTRE</span>
-          <span class="text-[0.55rem] uppercase tracking-[0.22em] text-muted font-mono mt-0.5">Since 1995</span>
+<header id="site-header" class="fixed top-0 inset-x-0 z-50 transition-all duration-500" data-transparent="true">
+  <!-- Thin utility rail (always solid navy) -->
+  <div class="hidden lg:block bg-navy-ink text-white/70" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+    <div class="container-mcp flex items-center justify-between py-2 text-[0.72rem] font-mono">
+      <div class="flex items-center gap-6">
+        <span class="inline-flex items-center gap-2"><span class="status-dot status-dot-closed js-dot-phone"></span><span class="js-text-phone text-white/80">Phones</span><span class="text-white/40">·</span><span>{site.phoneHours.value}</span></span>
+        <span class="text-white/30">·</span>
+        <span class="inline-flex items-center gap-2"><Icon name="MapPin" size={11} strokeWidth={2.2} class="text-red-bright" />Barnes · Chelsea Harbour</span>
+      </div>
+      <div class="flex items-center gap-5">
+        <a href={telLandline} class="hover:text-white transition inline-flex items-center gap-1.5"><Icon name="Phone" size={11} strokeWidth={2.2} />{site.phoneLandline}</a>
+        <a href={telMobile} class="hover:text-white transition inline-flex items-center gap-1.5"><Icon name="Phone" size={11} strokeWidth={2.2} />{site.phoneMobile}</a>
+        <a href={mailLink} class="hover:text-white transition inline-flex items-center gap-1.5"><Icon name="Mail" size={11} strokeWidth={2.2} />{site.email}</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main nav: transparent over hero, solid on scroll -->
+  <div id="main-nav" class="transition-all duration-500" style="background: transparent;">
+    <div class="container-mcp flex items-center justify-between py-5 lg:py-6">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3 flex-shrink-0" aria-label={`${site.name} — home`}>
+        <img src="/logo.png" alt="London LHD Centre" width="150" height="58" class="h-8 lg:h-9 w-auto nav-logo" />
+        <span class="hidden xl:flex flex-col leading-none border-l border-current/20 pl-3 nav-text-color">
+          <span class="font-display font-bold text-[0.92rem] tracking-[-0.01em]">LHD CENTRE</span>
+          <span class="text-[0.55rem] uppercase tracking-[0.24em] mt-1 opacity-60 font-mono">Since 1995</span>
         </span>
       </a>
 
-      <!-- Desktop nav -->
-      <nav class="hidden lg:flex items-center gap-0.5" aria-label="Primary">
+      <!-- Center text nav (desktop) -->
+      <nav class="hidden lg:flex items-center gap-9" aria-label="Primary">
         {nav.map((item) =>
           item.mega === 'brands' ? (
             <div class="nav-dd nav-mega relative">
-              <a href={item.href} class={`nav-pill inline-flex items-center gap-1 ${isActive(item) ? 'active' : ''}`} aria-haspopup="true" aria-expanded="false">
-                {item.label}
-                <Icon name="ChevronDown" size={14} strokeWidth={2.4} class="nav-dd-chev" />
+              <a href={item.href} class={`nav-link-edit inline-flex items-center gap-1.5 ${isActive(item) ? 'is-active' : ''}`} aria-haspopup="true">
+                {item.label}<Icon name="ChevronDown" size={12} strokeWidth={2.4} class="nav-dd-chev" />
               </a>
               <div class="nav-mega-panel" role="menu">
                 <p class="nav-mega-title">Browse by brand</p>
@@ -45,17 +57,13 @@ const isActive = (item: NavItem) =>
                     </a>
                   ))}
                 </div>
-                <a href="/lhd-cars-for-sale" class="nav-mega-all">
-                  View all stock
-                  <Icon name="ArrowRight" size={14} strokeWidth={2.4} />
-                </a>
+                <a href="/lhd-cars-for-sale" class="nav-mega-all">View all stock<Icon name="ArrowRight" size={13} strokeWidth={2.4} /></a>
               </div>
             </div>
           ) : item.children ? (
             <div class="nav-dd relative">
-              <a href={item.href} class={`nav-pill inline-flex items-center gap-1 ${isActive(item) ? 'active' : ''}`} aria-haspopup="true" aria-expanded="false">
-                {item.label}
-                <Icon name="ChevronDown" size={14} strokeWidth={2.4} class="nav-dd-chev" />
+              <a href={item.href} class={`nav-link-edit inline-flex items-center gap-1.5 ${isActive(item) ? 'is-active' : ''}`} aria-haspopup="true">
+                {item.label}<Icon name="ChevronDown" size={12} strokeWidth={2.4} class="nav-dd-chev" />
               </a>
               <div class="nav-dd-panel" role="menu">
                 {item.children.map((c) => (
@@ -64,147 +72,154 @@ const isActive = (item: NavItem) =>
               </div>
             </div>
           ) : (
-            <a href={item.href} class={`nav-pill ${isActive(item) ? 'active' : ''}`}>{item.label}</a>
+            <a href={item.href} class={`nav-link-edit ${isActive(item) ? 'is-active' : ''}`}>{item.label}</a>
           )
         )}
       </nav>
 
-      <!-- Right cluster -->
-      <div class="flex items-center gap-2">
-        <!-- Live phone-line status (wide screens only — keeps the bar uncluttered) -->
-        <span class="status-chip hidden 2xl:inline-flex" title="Telephone enquiries · Mon to Fri, 9:30am to 5pm">
-          <span class="status-dot status-dot-closed js-dot-phone"></span>
-          <span class="js-text-phone">Phones</span>
-        </span>
-
-        <!-- Search -->
-        <div class="relative">
-          <button id="search-toggle" class="nav-icon-btn" aria-label="Search stock" aria-expanded="false" aria-controls="search-pop">
-            <Icon name="Search" size={18} strokeWidth={2.2} />
-          </button>
-          <form id="search-pop" action="/lhd-cars-for-sale" method="get" class="search-pop" role="search">
-            <Icon name="Search" size={16} strokeWidth={2.2} class="text-muted" />
-            <input type="search" name="q" placeholder="Search make or model…" class="search-input" aria-label="Search make or model" />
-            <button type="submit" class="btn btn-primary btn-sm !px-3">Go</button>
-          </form>
-        </div>
-
-        <a href={telLandline} class="btn btn-primary btn-sm hidden lg:inline-flex whitespace-nowrap" aria-label={`Call us on ${site.phoneLandline}`}>
-          <Icon name="Phone" size={14} strokeWidth={2.2} />
-          {site.phoneLandline}
+      <!-- Right: single enquire CTA (desktop) + mobile -->
+      <div class="flex items-center gap-3">
+        <a href="/lhd-contact-us" class="hidden lg:inline-flex enquire-cta" aria-label="Enquire">
+          Enquire<Icon name="ArrowUpRight" size={14} strokeWidth={2.2} />
         </a>
-        <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm !px-3 hidden sm:inline-flex" aria-label="Message us on WhatsApp">
-          <Icon name="MessageCircle" size={16} strokeWidth={2.2} />
+        <a href={whatsappLink} target="_blank" rel="noopener" class="hidden md:inline-flex lg:hidden items-center gap-1.5 nav-text-color text-sm font-medium" aria-label="WhatsApp">
+          <Icon name="MessageCircle" size={16} strokeWidth={2.2} />WhatsApp
         </a>
-
-        <button id="menu-toggle" class="lg:hidden p-2.5 rounded-full transition" style="color: #0A1929;" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <button id="menu-toggle" class="lg:hidden p-2 nav-text-color" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
           <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
         </button>
       </div>
     </div>
+    <div class="nav-divider"></div>
   </div>
 
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="hidden lg:hidden mt-2 mx-4 rounded-3xl overflow-hidden" style="background: rgba(255,255,255,0.98); backdrop-filter: blur(22px); border: 1px solid rgba(10,25,41,0.10); box-shadow: 0 30px 60px -20px rgba(5,11,20,0.3); max-height: calc(100vh - 7rem); overflow-y: auto;">
-    <nav class="flex flex-col p-4" aria-label="Mobile">
+  <div id="mobile-menu" class="hidden lg:hidden absolute top-full left-0 right-0 bg-white shadow-xl" style="max-height: calc(100vh - 5rem); overflow-y: auto;">
+    <nav class="container-mcp flex flex-col py-4" aria-label="Mobile">
       {nav.map((item) => (
         <Fragment>
-          <a href={item.href} class="py-3 px-2 text-ink/85 hover:text-ink border-b border-navy/10 font-semibold transition" style={current === item.href ? 'color:#A20C23' : ''}>{item.label}</a>
+          <a href={item.href} class="py-3 text-ink/85 hover:text-red-deep border-b border-line text-lg font-semibold transition">{item.label}</a>
           {item.mega === 'brands' && (
-            <div class="grid grid-cols-3 gap-1.5 py-3 border-b border-navy/10">
+            <div class="grid grid-cols-3 gap-2 py-3 border-b border-line">
               {activeBrands.map((b) => (
-                <a href={`/lhd-cars-for-sale/${b.slug}`} class="text-[0.78rem] text-muted hover:text-red-deep py-1.5 px-1 transition">{b.name}</a>
+                <a href={`/lhd-cars-for-sale/${b.slug}`} class="flex flex-col items-center gap-1 py-2 text-[0.72rem] text-muted hover:text-red-deep transition">
+                  <img src={`/images/brands/${b.slug}.png`} alt="" class="w-7 h-7 object-contain" loading="lazy" />
+                  {b.name}
+                </a>
               ))}
             </div>
           )}
           {item.children && (
-            <div class="flex flex-col pl-4 border-b border-navy/10">
+            <div class="flex flex-col pl-4 border-b border-line">
               {item.children.filter((c) => c.href !== item.href).map((c) => (
-                <a href={c.href} class="py-2.5 px-2 text-sm text-muted hover:text-red-deep transition" style={current === c.href ? 'color:#A20C23' : ''}>{c.label}</a>
+                <a href={c.href} class="py-2 text-[0.92rem] text-muted hover:text-red-deep transition">{c.label}</a>
               ))}
             </div>
           )}
         </Fragment>
       ))}
       <div class="grid grid-cols-2 gap-2 mt-4">
-        <a href={telLandline} class="btn btn-outline btn-sm">
-          <Icon name="Phone" size={14} strokeWidth={2.2} /> Landline
-        </a>
-        <a href={telMobile} class="btn btn-primary btn-sm">
-          <Icon name="Phone" size={14} strokeWidth={2.2} /> Mobile
-        </a>
+        <a href={telLandline} class="btn btn-outline btn-sm"><Icon name="Phone" size={13} strokeWidth={2.2} />Landline</a>
+        <a href={telMobile} class="btn btn-primary btn-sm"><Icon name="Phone" size={13} strokeWidth={2.2} />Mobile</a>
       </div>
       <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm btn-block mt-2">
-        <Icon name="MessageCircle" size={16} strokeWidth={2.2} /> WhatsApp us
+        <Icon name="MessageCircle" size={14} strokeWidth={2.2} />WhatsApp
       </a>
     </nav>
   </div>
 </header>
 
 <style>
-  .hamburger { display: inline-flex; flex-direction: column; justify-content: center; gap: 4px; width: 22px; height: 22px; }
-  .hamburger span { display: block; width: 22px; height: 2px; background: #C8102E; border-radius: 2px; transition: transform 0.4s cubic-bezier(0.68,-0.55,0.27,1.55), opacity 0.25s ease; transform-origin: center; }
-  .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-  .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-
-  .nav-icon-btn {
-    display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px;
-    border-radius: 999px; color: rgba(10,25,41,0.72); background: rgba(10,25,41,0.04);
-    border: 1px solid rgba(10,25,41,0.08); transition: all 0.25s ease;
+  /* ───── Editorial nav typography ───── */
+  .nav-link-edit {
+    position: relative;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--nav-fg, #fff);
+    padding: 0.4rem 0;
+    transition: color 0.25s ease;
   }
-  .nav-icon-btn:hover { color: #C8102E; border-color: rgba(200,16,46,0.4); background: rgba(200,16,46,0.06); }
-
-  .status-chip {
-    align-items: center; gap: 0.4rem; padding: 0.35rem 0.7rem; border-radius: 999px;
-    font-size: 0.66rem; font-weight: 600; letter-spacing: 0.04em; font-family: var(--font-mono);
-    background: rgba(10,25,41,0.04); border: 1px solid rgba(10,25,41,0.1); color: rgba(10,25,41,0.78); white-space: nowrap;
+  .nav-link-edit::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
   }
-
-  /* search popover */
-  .search-pop {
-    position: absolute; top: calc(100% + 12px); right: 0; display: none; align-items: center; gap: 0.5rem;
-    width: min(20rem, 80vw); padding: 0.5rem 0.5rem 0.5rem 0.9rem; border-radius: 999px;
-    background: rgba(255,255,255,0.98); border: 1px solid rgba(10,25,41,0.1);
-    backdrop-filter: blur(22px) saturate(170%); -webkit-backdrop-filter: blur(22px) saturate(170%);
-    box-shadow: 0 20px 44px -16px rgba(5,11,20,0.28), inset 0 1px 0 0 rgba(255,255,255,0.7); z-index: 60;
-  }
-  .search-pop.open { display: flex; }
-  .search-input { flex: 1; border: 0; outline: 0; background: transparent; font-size: 0.92rem; color: #0A1929; min-width: 0; }
-
-  /* dropdown panel (Buying LHD Cars) */
-  .nav-dd-panel {
-    position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(8px);
-    min-width: 220px; padding: 0.5rem; border-radius: 18px;
-    background: rgba(255,255,255,0.97); border: 1px solid rgba(10,25,41,0.1);
-    backdrop-filter: blur(22px) saturate(170%); -webkit-backdrop-filter: blur(22px) saturate(170%);
-    box-shadow: 0 20px 44px -16px rgba(5,11,20,0.28), inset 0 1px 0 0 rgba(255,255,255,0.7);
-    opacity: 0; visibility: hidden; transition: opacity 0.25s ease, transform 0.25s ease; z-index: 60;
-  }
-  .nav-dd:hover .nav-dd-panel, .nav-dd:focus-within .nav-dd-panel { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-  .nav-dd:hover .nav-dd-chev, .nav-mega:hover .nav-dd-chev { transform: rotate(180deg); }
-  .nav-dd-item { display: block; padding: 0.6rem 0.85rem; border-radius: 11px; font-size: 0.9rem; font-weight: 600; color: rgba(10,25,41,0.78); transition: background 0.2s ease, color 0.2s ease; }
-  .nav-dd-item:hover { background: rgba(200,16,46,0.08); color: #A20C23; }
-  .nav-dd-item.active { color: #A20C23; background: rgba(200,16,46,0.06); }
+  .nav-link-edit:hover::after, .nav-link-edit.is-active::after { transform: scaleX(1); }
+  .nav-link-edit.is-active { color: var(--nav-active, #C8102E); }
   .nav-dd-chev { transition: transform 0.3s ease; }
+  .nav-dd:hover .nav-dd-chev, .nav-mega:hover .nav-dd-chev { transform: rotate(180deg); }
 
-  /* brand mega panel */
-  .nav-mega-panel {
-    position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(8px);
-    width: 30rem; padding: 1.1rem; border-radius: 22px;
-    background: rgba(255,255,255,0.98); border: 1px solid rgba(10,25,41,0.1);
-    backdrop-filter: blur(22px) saturate(170%); -webkit-backdrop-filter: blur(22px) saturate(170%);
-    box-shadow: 0 28px 60px -20px rgba(5,11,20,0.32), inset 0 1px 0 0 rgba(255,255,255,0.7);
-    opacity: 0; visibility: hidden; transition: opacity 0.25s ease, transform 0.25s ease; z-index: 60;
+  /* nav text colour responds to transparent/solid state */
+  #site-header[data-transparent="true"] #main-nav { --nav-fg: #fff; --nav-active: #fff; }
+  #site-header[data-transparent="false"] #main-nav { --nav-fg: #0A1929; --nav-active: #C8102E; }
+  .nav-text-color { color: var(--nav-fg, #fff); }
+  .nav-logo { transition: filter 0.4s ease; }
+  #site-header[data-transparent="true"] .nav-logo { filter: brightness(0) invert(1); }
+  .nav-divider { height: 1px; background: var(--nav-fg, #fff); opacity: 0.08; }
+  #site-header[data-transparent="true"] .nav-divider { opacity: 0; }
+
+  /* ───── Enquire CTA — flat, slightly translucent, no gradient ───── */
+  .enquire-cta {
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    padding: 0.62rem 1.15rem;
+    border-radius: 999px;
+    font-size: 0.74rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--nav-fg, #fff);
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.3);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
   }
-  .nav-mega:hover .nav-mega-panel, .nav-mega:focus-within .nav-mega-panel { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-  .nav-mega-title { font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.2em; font-family: var(--font-mono); color: var(--c-muted); margin: 0 0 0.7rem 0.3rem; }
+  .enquire-cta:hover { background: rgba(200,16,46,0.9); border-color: rgba(200,16,46,0.9); color: #fff; transform: translateY(-1px); }
+  #site-header[data-transparent="false"] .enquire-cta {
+    background: rgba(10,25,41,0.06);
+    border-color: rgba(10,25,41,0.18);
+    color: rgb(10,25,41);
+  }
+  #site-header[data-transparent="false"] .enquire-cta:hover { background: rgba(200,16,46,0.92); border-color: rgba(200,16,46,0.92); color: #fff; }
+
+  /* ───── Hamburger ───── */
+  .hamburger { display: inline-flex; flex-direction: column; justify-content: center; gap: 5px; width: 22px; height: 22px; }
+  .hamburger span { display: block; width: 22px; height: 1.5px; background: currentColor; border-radius: 2px; transition: transform 0.4s cubic-bezier(0.68,-0.55,0.27,1.55), opacity 0.25s ease; transform-origin: center; }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ───── Dropdown / mega panels ───── */
+  .nav-dd-panel, .nav-mega-panel {
+    position: absolute; left: 50%; top: calc(100% + 18px);
+    transform: translateX(-50%) translateY(8px);
+    padding: 0.5rem;
+    background: #fff;
+    border: 1px solid rgb(10 25 41 / 0.08);
+    border-radius: 6px;
+    box-shadow: 0 28px 60px -24px rgb(5 11 20 / 0.25);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 60;
+  }
+  .nav-dd-panel { min-width: 220px; }
+  .nav-mega-panel { width: 32rem; padding: 1.2rem; }
+  .nav-dd:hover .nav-dd-panel, .nav-dd:focus-within .nav-dd-panel,
+  .nav-mega:hover .nav-mega-panel, .nav-mega:focus-within .nav-mega-panel {
+    opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0);
+  }
+  .nav-dd-item { display: block; padding: 0.65rem 0.9rem; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgb(10,25,41,0.78); border-radius: 4px; transition: all 0.2s ease; }
+  .nav-dd-item:hover, .nav-dd-item.active { background: rgb(200,16,46,0.06); color: rgb(162,12,35); }
+  .nav-mega-title { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.22em; font-family: var(--font-mono); color: rgb(90,101,115); margin: 0 0 0.8rem 0.4rem; }
   .nav-mega-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.2rem; }
-  .nav-mega-item { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.6rem; border-radius: 11px; font-size: 0.86rem; font-weight: 600; color: rgba(10,25,41,0.82); transition: background 0.2s ease, color 0.2s ease; }
-  .nav-mega-item:hover { background: rgba(200,16,46,0.07); color: #A20C23; }
-  .nav-mega-logo { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 8px; background: #fff; border: 1px solid var(--c-border); flex-shrink: 0; overflow: hidden; }
-  .nav-mega-logo img { width: 74%; height: 74%; object-fit: contain; }
-  .nav-mega-all { display: inline-flex; align-items: center; gap: 0.4rem; margin: 0.8rem 0.3rem 0; font-size: 0.82rem; font-weight: 700; color: #A20C23; }
+  .nav-mega-item { display: inline-flex; align-items: center; gap: 0.55rem; padding: 0.55rem 0.65rem; border-radius: 4px; font-size: 0.84rem; font-weight: 600; color: rgb(10,25,41,0.82); transition: all 0.2s ease; }
+  .nav-mega-item:hover { background: rgb(200,16,46,0.06); color: rgb(162,12,35); }
+  .nav-mega-logo { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; flex-shrink: 0; }
+  .nav-mega-logo img { width: 100%; height: 100%; object-fit: contain; }
+  .nav-mega-all { display: inline-flex; align-items: center; gap: 0.4rem; margin: 0.9rem 0.4rem 0; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgb(162,12,35); }
   .nav-mega-all svg { transition: transform 0.3s ease; }
   .nav-mega-all:hover svg { transform: translateX(4px); }
 </style>
@@ -212,7 +227,8 @@ const isActive = (item: NavItem) =>
 <script>
   const toggle = document.getElementById('menu-toggle');
   const menu = document.getElementById('mobile-menu');
-  const shell = document.getElementById('nav-shell');
+  const header = document.getElementById('site-header');
+  const main = document.getElementById('main-nav');
   const burger = toggle?.querySelector('.hamburger');
 
   toggle?.addEventListener('click', () => {
@@ -220,68 +236,46 @@ const isActive = (item: NavItem) =>
     menu?.classList.toggle('hidden');
     burger?.classList.toggle('open', !isOpen);
     toggle?.setAttribute('aria-expanded', (!isOpen).toString());
-    toggle?.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
   });
   menu?.querySelectorAll('a').forEach((a) =>
     a.addEventListener('click', () => {
       menu.classList.add('hidden');
       burger?.classList.remove('open');
-      toggle?.setAttribute('aria-expanded', 'false');
     })
   );
 
-  // Search popover
-  const sToggle = document.getElementById('search-toggle');
-  const sPop = document.getElementById('search-pop');
-  sToggle?.addEventListener('click', () => {
-    const open = sPop?.classList.toggle('open');
-    sToggle.setAttribute('aria-expanded', (!!open).toString());
-    if (open) (sPop?.querySelector('input') as HTMLInputElement | null)?.focus();
-  });
-  document.addEventListener('click', (e) => {
-    if (sPop && !sPop.contains(e.target as Node) && !sToggle?.contains(e.target as Node)) {
-      sPop.classList.remove('open');
-      sToggle?.setAttribute('aria-expanded', 'false');
-    }
-  });
-
-  // Nav strengthen / shrink on scroll
+  // Transparent → solid on scroll
   let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(() => {
-      const y = window.scrollY;
-      if (shell) {
-        if (y > 30) { shell.style.background = 'rgba(255,255,255,0.93)'; shell.style.transform = 'scale(0.985)'; }
-        else { shell.style.background = 'rgba(255,255,255,0.82)'; shell.style.transform = 'scale(1)'; }
-      }
-      ticking = false;
-    });
-  });
+  const update = () => {
+    if (!header || !main) return;
+    const y = window.scrollY;
+    if (y > 60) {
+      header.setAttribute('data-transparent', 'false');
+      main.style.background = 'rgba(255,255,255,0.96)';
+      main.style.backdropFilter = 'blur(14px) saturate(160%)';
+      (main.style as any).webkitBackdropFilter = 'blur(14px) saturate(160%)';
+      main.style.boxShadow = '0 1px 0 rgba(10,25,41,0.06)';
+    } else {
+      header.setAttribute('data-transparent', 'true');
+      main.style.background = 'transparent';
+      main.style.backdropFilter = 'none';
+      (main.style as any).webkitBackdropFilter = 'none';
+      main.style.boxShadow = 'none';
+    }
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
 
-  // ── Dual live status — Phone enquiries 9:30–17:00 Mon–Fri, Barnes showroom 11:00–15:00 Mon–Fri.
-  // Styled CSS dots, no emoji. Updates on load + every 60s.
-  function setStatus(dotSel: string, textSel: string, open: boolean, label: string) {
-    document.querySelectorAll(dotSel).forEach((d) => {
-      d.className = 'status-dot ' + (open ? 'status-dot-open' : 'status-dot-closed') + ' ' + dotSel.replace('.', '');
-    });
-    document.querySelectorAll(textSel).forEach((t) => { t.textContent = label; });
-  }
-  function updateStatuses() {
+  // Phone status (utility bar)
+  function updateStatus() {
     const now = new Date();
-    const day = now.getDay(); // 0 Sun … 6 Sat
+    const day = now.getDay();
     const mins = now.getHours() * 60 + now.getMinutes();
-    const weekday = day >= 1 && day <= 5;
-
-    // Phones: 9:30 (570) – 17:00 (1020)
-    const pOpen = weekday && mins >= 570 && mins < 1020;
-    setStatus('.js-dot-phone', '.js-text-phone', pOpen, pOpen ? 'Phones open' : 'Phones closed');
-
-    // Showroom: 11:00 (660) – 15:00 (900)
-    const sOpen = weekday && mins >= 660 && mins < 900;
-    setStatus('.js-dot-show', '.js-text-show', sOpen, sOpen ? 'Showroom open' : 'Showroom closed');
+    const open = day >= 1 && day <= 5 && mins >= 570 && mins < 1020;
+    document.querySelectorAll('.js-dot-phone').forEach((d) => d.className = 'status-dot ' + (open ? 'status-dot-open' : 'status-dot-closed') + ' js-dot-phone');
+    document.querySelectorAll('.js-text-phone').forEach((t) => t.textContent = open ? 'Phones open' : 'Phones closed');
   }
-  updateStatuses();
-  setInterval(updateStatuses, 60000);
+  updateStatus();
+  setInterval(updateStatus, 60000);
 </script>

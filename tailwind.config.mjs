@@ -54,6 +54,7 @@ export default {
       fontFamily: {
         sans: ['"Open Sans"', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
         display: ['"Open Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+        serif: ['"Playfair Display"', '"Times New Roman"', 'Georgia', 'serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', '"SF Mono"', 'monospace'],
       },
       borderRadius: {

@@ -35,56 +35,130 @@ const fmt = (n: number) => n.toLocaleString('en-GB');
   title="Left Hand Drive Cars for Sale in London | London LHD Centre"
   description="Discover London LHD Centre, your premier destination for left hand drive car sales in the UK. Explore our showroom today! | London Left Hand Drive Centre"
 >
-  <!-- ════════ HERO — editorial split ════════ -->
-  <section class="relative bg-white overflow-hidden pt-28 md:pt-32 pb-14 md:pb-16 lg:min-h-screen lg:flex lg:items-center">
-    <div class="absolute top-0 right-0 w-[62%] h-[72%] pointer-events-none" style="background: radial-gradient(110% 80% at 100% 0%, rgb(var(--rgb-steel) / 0.12), transparent 60%);"></div>
-    <div class="absolute bottom-0 left-0 w-[42%] h-[55%] pointer-events-none" style="background: radial-gradient(90% 80% at 0% 100%, rgb(var(--rgb-red) / 0.05), transparent 60%);"></div>
+  <!-- ════════ HERO — cinematic full-bleed editorial ════════ -->
+  <section class="hero relative w-full min-h-screen overflow-hidden bg-navy-ink">
+    <!-- Background image -->
+    <img src="/images/home-1.jpg" alt="" aria-hidden="true" class="hero-bg absolute inset-0 w-full h-full object-cover" loading="eager" fetchpriority="high" />
+    <!-- Layered overlays for cinematic depth -->
+    <div class="absolute inset-0" style="background: linear-gradient(120deg, rgb(5 11 20 / 0.85) 0%, rgb(5 11 20 / 0.55) 38%, rgb(5 11 20 / 0.35) 60%, rgb(5 11 20 / 0.75) 100%);"></div>
+    <div class="absolute inset-0" style="background: linear-gradient(180deg, rgb(5 11 20 / 0.4) 0%, transparent 30%, transparent 65%, rgb(5 11 20 / 0.85) 100%);"></div>
+    <div class="absolute inset-0" style="background: radial-gradient(60% 80% at 18% 50%, rgb(200 16 46 / 0.1) 0%, transparent 60%);"></div>
 
-    <div class="container-mcp relative w-full">
-      <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-        <!-- Copy -->
-        <div class="lg:col-span-6">
-          <span class="eyebrow mb-6 fade-in">The UK’s leading left-hand drive specialist · Since 1995</span>
-          <h1 class="text-navy text-balance fade-in stagger-1" style="font-size:clamp(2.55rem,5vw,4.5rem);font-weight:800;line-height:1.03;letter-spacing:-0.035em;">
-            We specialise in buying and selling Left Hand Drive cars
-          </h1>
-          <p class="text-lg text-muted leading-relaxed max-w-xl mt-6 text-pretty fade-in stagger-2">
-            The UK’s leading LHD dealer, with over 30 years of experience and a wide range of left-hand drive cars from every major brand — bought and sold with the best possible service.
-          </p>
-          <div class="flex flex-col sm:flex-row flex-wrap gap-3 mt-8 fade-in stagger-3">
-            <a href="/lhd-cars-for-sale" class="btn btn-primary btn-lg">View Latest Stock<Icon name="ArrowRight" size={16} strokeWidth={2.5} /></a>
-            <a href={telLandline} class="btn btn-outline btn-lg"><Icon name="Phone" size={16} strokeWidth={2.3} />{site.phoneLandline}</a>
-            <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg"><Icon name="MessageCircle" size={17} strokeWidth={2.2} />WhatsApp</a>
-          </div>
-          <div class="flex flex-wrap items-center gap-x-5 gap-y-2.5 mt-10 text-[0.82rem] font-mono text-muted fade-in stagger-4">
-            <span><span class="text-red-deep font-bold text-base">30+</span> years</span>
-            <span class="w-px h-3.5 bg-line"></span>
-            <span><span class="text-red-deep font-bold text-base">50+</span> brands</span>
-            <span class="w-px h-3.5 bg-line"></span>
-            <span><span class="text-red-deep font-bold text-base">2</span> London showrooms</span>
-            <span class="w-px h-3.5 bg-line"></span>
-            <span>UK &amp; Europe delivery</span>
-          </div>
-        </div>
+    <!-- Editorial content -->
+    <div class="relative z-10 min-h-screen flex flex-col">
+      <div class="flex-1 flex items-center pt-28 lg:pt-40 pb-32">
+        <div class="container-mcp w-full">
+          <div class="max-w-5xl">
+            <!-- Eyebrow -->
+            <div class="flex items-center gap-4 mb-10 lg:mb-14 fade-in">
+              <span class="block h-px w-10 bg-red"></span>
+              <span class="text-white/80 text-[0.72rem] font-mono uppercase tracking-[0.32em]">Since 1995 — The UK's leading LHD specialist</span>
+            </div>
 
-        <!-- Image -->
-        <div class="lg:col-span-6 relative fade-in stagger-2">
-          <div class="relative rounded-[1.75rem] overflow-hidden border border-line bg-stone" style="box-shadow: var(--shadow-lift); aspect-ratio: 4 / 3;">
-            <img src="/images/home-2.jpg" alt="Premium left-hand drive cars at the London LHD Centre" class="w-full h-full object-cover" loading="eager" fetchpriority="high" width="1100" height="825" />
-            <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 55%, rgb(5 11 20 / 0.42) 100%);"></div>
-            <div class="absolute left-4 right-4 bottom-4 flex items-center justify-between gap-3">
-              <span class="glass rounded-full pl-3 pr-4 py-2 text-white text-[0.76rem] font-mono inline-flex items-center gap-2">
-                <Icon name="MapPin" size={13} strokeWidth={2.3} /> Barnes · Chelsea Harbour
-              </span>
-              <a href="/lhd-cars-for-sale" class="glass rounded-full px-4 py-2 text-white text-[0.78rem] font-semibold inline-flex items-center gap-1.5 hover:gap-2.5 transition-all">
-                View stock <Icon name="ArrowRight" size={14} strokeWidth={2.4} />
-              </a>
+            <!-- Editorial headline with serif italic accent — the WOW move -->
+            <h1 class="text-white text-balance fade-in stagger-1" style="font-family: var(--font-sans); font-size: clamp(3rem, 8vw, 8rem); font-weight: 300; line-height: 0.96; letter-spacing: -0.035em;">
+              <span class="block">We buy and sell</span>
+              <span class="block"><em class="hero-italic">Left&nbsp;Hand&nbsp;Drive</em></span>
+              <span class="block font-semibold">cars in London.</span>
+            </h1>
+
+            <!-- Sub + CTA -->
+            <div class="mt-10 lg:mt-14 grid lg:grid-cols-12 gap-8 items-end">
+              <div class="lg:col-span-6 fade-in stagger-2">
+                <p class="text-white/75 text-lg leading-relaxed max-w-md text-pretty">
+                  The UK's leading LHD dealer for over 30 years — from everyday Skodas to ultra-premium Ferraris, McLarens and Rolls-Royces. Two London showrooms. Worldwide delivery.
+                </p>
+              </div>
+              <div class="lg:col-span-6 flex items-center justify-start lg:justify-end gap-4 fade-in stagger-3">
+                <a href="/lhd-cars-for-sale" class="hero-cta group">
+                  <span>View Latest Stock</span>
+                  <span class="hero-cta-arrow"><Icon name="ArrowRight" size={18} strokeWidth={2.2} /></span>
+                </a>
+                <a href={whatsappLink} target="_blank" rel="noopener" class="hidden sm:inline-flex items-center gap-2 text-white/85 hover:text-white text-sm font-medium border-b border-white/30 hover:border-white pb-1 transition-all">
+                  <Icon name="MessageCircle" size={16} strokeWidth={2.2} /> WhatsApp
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Bottom metadata rail -->
+      <div class="relative border-t border-white/10 backdrop-blur-sm" style="background: rgb(5 11 20 / 0.3);">
+        <div class="container-mcp grid grid-cols-2 lg:grid-cols-4 divide-x divide-white/10">
+          <div class="px-5 py-5 lg:px-8 lg:py-7">
+            <p class="text-[0.6rem] font-mono uppercase tracking-[0.22em] text-white/45 mb-2">Experience</p>
+            <p class="text-white text-2xl lg:text-3xl font-light"><span class="font-serif italic">30+</span> <span class="text-white/60 text-lg font-sans">years</span></p>
+          </div>
+          <div class="px-5 py-5 lg:px-8 lg:py-7">
+            <p class="text-[0.6rem] font-mono uppercase tracking-[0.22em] text-white/45 mb-2">Brands</p>
+            <p class="text-white text-2xl lg:text-3xl font-light"><span class="font-serif italic">50+</span> <span class="text-white/60 text-lg font-sans">covered</span></p>
+          </div>
+          <div class="px-5 py-5 lg:px-8 lg:py-7">
+            <p class="text-[0.6rem] font-mono uppercase tracking-[0.22em] text-white/45 mb-2">London</p>
+            <p class="text-white text-2xl lg:text-3xl font-light"><span class="font-serif italic">2</span> <span class="text-white/60 text-lg font-sans">showrooms</span></p>
+          </div>
+          <div class="px-5 py-5 lg:px-8 lg:py-7">
+            <p class="text-[0.6rem] font-mono uppercase tracking-[0.22em] text-white/45 mb-2">Delivery</p>
+            <p class="text-white text-base lg:text-lg font-sans">UK · Europe · USA · Middle East</p>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Scroll cue -->
+    <span class="hidden lg:flex absolute bottom-32 right-8 flex-col items-center gap-3 text-white/45 text-[0.6rem] font-mono uppercase tracking-[0.3em]" style="writing-mode: vertical-rl; transform: rotate(180deg);">
+      Scroll
+      <span class="block w-px h-12 bg-gradient-to-t from-white/50 to-transparent"></span>
+    </span>
   </section>
+
+  <style is:global>
+    .hero-italic {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: #fff;
+      background: linear-gradient(120deg, #fff 30%, #E11D3A 50%, #fff 75%);
+      background-size: 200% 100%;
+      background-position: 100% 0;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: hero-shine 6s ease-in-out infinite;
+    }
+    @keyframes hero-shine {
+      0%, 100% { background-position: 100% 0; }
+      50% { background-position: 0% 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-italic { animation: none; color: #fff; -webkit-text-fill-color: #fff; background: none; }
+    }
+
+    .hero-bg { transform: scale(1.05); animation: hero-zoom 24s ease-in-out infinite alternate; }
+    @keyframes hero-zoom { from { transform: scale(1.05); } to { transform: scale(1.15) translate(-1%, -1%); } }
+    @media (prefers-reduced-motion: reduce) { .hero-bg { animation: none; transform: none; } }
+
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 0.85rem;
+      padding: 1.1rem 0;
+      color: #fff;
+      font-family: var(--font-sans);
+      font-size: 0.86rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,0.5);
+      transition: all 0.35s ease;
+    }
+    .hero-cta:hover { border-color: #E11D3A; gap: 1.2rem; }
+    .hero-cta-arrow {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 38px; height: 38px;
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 999px;
+      transition: all 0.4s ease;
+    }
+    .hero-cta:hover .hero-cta-arrow { background: #C8102E; border-color: #C8102E; transform: rotate(-45deg); }
+  </style>
 
   <!-- Brand logo marquee -->
   <section class="py-7 md:py-8 bg-snow border-y border-line overflow-hidden">
