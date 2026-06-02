@@ -1,0 +1,46 @@
+---
+import Icon from './Icon.astro';
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  image?: string;
+  crumb?: string;
+  primary?: { href: string; label: string };
+  secondary?: { href: string; label: string };
+}
+const { eyebrow, title, subtitle, image, crumb, primary, secondary } = Astro.props;
+---
+<section class="section-navy relative overflow-hidden pt-32 pb-14 md:pt-40 md:pb-20">
+  {image && (
+    <>
+      <img src={image} alt="" aria-hidden="true" class="absolute inset-0 w-full h-full object-cover opacity-30" loading="eager" />
+      <div class="absolute inset-0 hero-overlay"></div>
+    </>
+  )}
+  <div class="absolute inset-0 hero-mesh opacity-70"></div>
+  <div class="glow-orb" style="width: 380px; height: 380px; top: -100px; right: -60px; background: #C8102E; opacity: 0.16;"></div>
+  <div class="glow-orb" style="width: 320px; height: 320px; bottom: -120px; left: -70px; background: #4F89C2; opacity: 0.22;"></div>
+
+  <div class="container-mcp relative z-10">
+    <nav class="flex items-center gap-2 text-[0.78rem] text-white/55 mb-6 fade-in" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-red-bright transition">Home</a>
+      <Icon name="ChevronRight" size={13} strokeWidth={2.4} />
+      <span class="text-white/80">{crumb ?? title}</span>
+    </nav>
+    {eyebrow && <span class="eyebrow eyebrow-light mb-5 fade-in">{eyebrow}</span>}
+    <h1 class="heading-xl text-white text-balance max-w-4xl fade-in stagger-1">{title}</h1>
+    {subtitle && <p class="text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl mt-6 text-pretty fade-in stagger-2">{subtitle}</p>}
+    {(primary || secondary) && (
+      <div class="flex flex-col sm:flex-row gap-3 mt-9 fade-in stagger-3">
+        {primary && (
+          <a href={primary.href} class="btn btn-primary btn-lg">
+            {primary.label}
+            <Icon name="ArrowRight" size={16} strokeWidth={2.5} />
+          </a>
+        )}
+        {secondary && <a href={secondary.href} class="btn btn-glass btn-lg">{secondary.label}</a>}
+      </div>
+    )}
+  </div>
+</section>

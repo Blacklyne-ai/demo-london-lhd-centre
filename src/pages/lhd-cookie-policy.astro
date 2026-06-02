@@ -1,0 +1,110 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site, mailLink } from '../data/site';
+---
+<Layout
+  current=""
+  title="Cookie Policy | The London Left Hand Drive Centre"
+  description="How the London LHD Centre uses cookies and how to manage your preferences."
+>
+  <PageHero
+    eyebrow="Legal"
+    title="Cookie Policy"
+    subtitle="How we use cookies on this site."
+    crumb="Cookie Policy"
+  />
+
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-narrow">
+      <div class="legal-prose fade-in">
+        <p><strong>Last updated:</strong> 02/06/2026</p>
+
+        <p>
+          This Cookie Policy explains how {site.name} (“we”, “us”, “our”) uses cookies and
+          similar technologies on this website, and the choices available to you. It should be read
+          alongside our Privacy Policy. This site is designed to be light-touch: by default it does
+          not set any tracking or advertising cookies.
+        </p>
+
+        <h2>What are cookies?</h2>
+        <p>
+          Cookies are small text files placed on your device when you visit a website. They are
+          widely used to make websites work, to make them work more efficiently, and to provide
+          information to the site owner. Cookies can be “session” cookies, which are deleted when you
+          close your browser, or “persistent” cookies, which remain until they expire or are deleted.
+        </p>
+        <p>
+          Similar technologies — such as your browser’s <strong>localStorage</strong> — can also
+          store small amounts of information on your device. Where we mention “cookies” in this
+          policy, we mean cookies and these comparable technologies.
+        </p>
+
+        <h2>The cookies we use</h2>
+        <p>
+          This is a static website. Out of the box, it sets <strong>no tracking, analytics or
+          advertising cookies</strong>, and it does not profile you or follow you across other sites.
+        </p>
+        <ul>
+          <li>
+            <strong>Your consent choice (localStorage).</strong> When you respond to our consent
+            banner, your preference is saved locally in your browser using localStorage so that we
+            don’t ask you again on every page. This is a strictly necessary preference used only to
+            remember your choice — it is not a tracking cookie, is not shared with anyone, and never
+            leaves your device.
+          </li>
+          <li>
+            <strong>Optional analytics (consent only).</strong> We do not run analytics by default.
+            Should we ever introduce analytics in future, any such cookies would be set
+            <strong>only after you have given your consent</strong> through the banner, and you would
+            be able to withdraw that consent at any time.
+          </li>
+        </ul>
+
+        <h2>Third-party content</h2>
+        <p>
+          Some pages embed content from third parties, which may set their own cookies once that
+          content loads. In particular, our contact and locations pages include
+          <strong>Google Maps</strong> embeds that show our Barnes and Chelsea Harbour showrooms.
+          When a map loads, Google may set cookies on your device. These cookies are controlled by
+          Google rather than by us, and are governed by Google’s own privacy and cookie policies.
+        </p>
+        <p>
+          If you would prefer not to allow these cookies, you can avoid loading the embedded maps and
+          instead use the “Get directions” links to open Google Maps in a separate tab, or adjust
+          your browser settings as described below.
+        </p>
+
+        <h2>Managing cookies</h2>
+        <p>You can control and manage cookies in two main ways:</p>
+        <ul>
+          <li>
+            <strong>Our on-site consent banner.</strong> When you first visit, our banner lets you
+            accept or decline non-essential cookies. Because your choice is stored locally, you can
+            change your mind by clearing your browser’s site data for this website, which will prompt
+            the banner to appear again.
+          </li>
+          <li>
+            <strong>Your browser settings.</strong> Most browsers let you view, block or delete
+            cookies, and refuse cookies from specific sites. Please note that blocking strictly
+            necessary cookies or clearing site data may affect how parts of this website function.
+            You can find guidance in your browser’s help pages.
+          </li>
+        </ul>
+
+        <h2>Changes to this policy</h2>
+        <p>
+          We may update this Cookie Policy from time to time to reflect changes to the site, to the
+          technologies we use, or to legal and regulatory requirements. Any changes will be posted on
+          this page with a revised “Last updated” date above.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          If you have any questions about this Cookie Policy or how we handle cookies, please contact
+          us at <a href={mailLink}>{site.email}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

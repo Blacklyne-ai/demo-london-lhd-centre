@@ -1,0 +1,81 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+import PageHero from '../../components/PageHero.astro';
+import VehicleCard from '../../components/VehicleCard.astro';
+import BrandMark from '../../components/BrandMark.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { activeBrands, brandBySlug } from '../../data/brands';
+import { vehiclesByBrandSlug } from '../../data/inventory';
+import { telLandline, whatsappFor } from '../../data/site';
+
+export function getStaticPaths() {
+  return activeBrands.map((b) => ({ params: { brand: b.slug }, props: { brand: b } }));
+}
+const { brand } = Astro.props;
+const cars = vehiclesByBrandSlug(brand.slug);
+const others = activeBrands.filter((b) => b.slug !== brand.slug).slice(0, 6);
+const wa = whatsappFor(`Hi, I'm interested in a left-hand drive ${brand.name}. Do you have any in stock?`);
+---
+<Layout
+  current="/lhd-cars-for-sale"
+  title={`LHD ${brand.name} Cars for Sale in the UK | London LHD Centre`}
+  description={`Left-hand drive ${brand.name} cars for sale at the UK's leading LHD specialist. ${brand.intro}`}
+>
+  <PageHero
+    eyebrow={`Left hand drive ${brand.name}`}
+    title={`LHD ${brand.name} Cars for Sale in the UK`}
+    crumb={brand.name}
+    subtitle={brand.intro}
+    primary={{ href: cars.length ? '#stock' : '/lhd-contact-us', label: cars.length ? `View ${brand.name} stock` : `Enquire about ${brand.name}` }}
+    secondary={{ href: '/lhd-cars-for-sale', label: 'All stock' }}
+  />
+
+  <section id="stock" class="py-24 md:py-28 bg-white">
+    <div class="container-mcp">
+      <div class="flex items-center gap-4 mb-10 fade-in">
+        <BrandMark mark={brand.mark} tier={brand.tier} size={64} />
+        <div>
+          <h2 class="heading-md text-ink">{cars.length ? `Available LHD ${brand.name}` : `LHD ${brand.name}`}</h2>
+          <p class="text-muted text-[0.95rem] font-mono">{cars.length} {cars.length === 1 ? 'car' : 'cars'} {cars.length ? 'in stock' : 'currently in stock'}{brand.tier === 'ultra' ? ' · Ultra-premium' : ''}</p>
+        </div>
+      </div>
+
+      {cars.length > 0 ? (
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+          {cars.map((v, i) => <VehicleCard vehicle={v} index={i} />)}
+        </div>
+      ) : (
+        <div class="card-feature max-w-2xl mx-auto text-center !py-12 fade-in">
+          <span class="tile-icon tile-icon-red mx-auto mb-5"><Icon name="Search" size={24} strokeWidth={2} /></span>
+          <h3 class="heading-md text-ink mb-3">No {brand.name} in stock right now</h3>
+          <p class="text-muted leading-relaxed mb-7 max-w-md mx-auto">We source left-hand drive {brand.name} models to order from across the UK and Europe. Register your interest and we’ll be in touch as soon as the right car arrives.</p>
+          <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            <a href={wa} target="_blank" rel="noopener" class="btn btn-whatsapp"><Icon name="MessageCircle" size={17} strokeWidth={2.2} /> Register interest</a>
+            <a href={telLandline} class="btn btn-navy"><Icon name="Phone" size={15} strokeWidth={2.2} /> Call us</a>
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Other brands -->
+  <section class="py-20 md:py-24 section-snow">
+    <div class="container-mcp">
+      <div class="text-center max-w-2xl mx-auto mb-10 fade-in">
+        <span class="eyebrow eyebrow-center mb-5">More brands</span>
+        <h2 class="heading-lg text-balance mt-1">Explore other LHD makes</h2>
+      </div>
+      <div class="grid grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
+        {others.map((b, i) => (
+          <a href={`/lhd-cars-for-sale/${b.slug}`} class={`card !p-5 flex flex-col items-center justify-center text-center gap-3 group fade-in stagger-${(i % 6) + 1}`}>
+            <BrandMark mark={b.mark} tier={b.tier} size={48} />
+            <span class="font-semibold text-ink text-[0.88rem] leading-tight group-hover:text-red-deep transition">{b.name}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

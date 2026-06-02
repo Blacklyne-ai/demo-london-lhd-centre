@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import VehicleCard from '../components/VehicleCard.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { vehicles, brandsInStock, bodyTypes, fuelTypes, priceBands, inventoryStats } from '../data/inventory';
+
+const sortOptions = [
+  { v: 'featured', l: 'Featured' },
+  { v: 'price-asc', l: 'Price: low to high' },
+  { v: 'price-desc', l: 'Price: high to low' },
+  { v: 'year-desc', l: 'Newest first' },
+  { v: 'make-az', l: 'Make: A–Z' },
+];
+---
+<Layout
+  current="/lhd-cars-for-sale"
+  title="LHD Cars for Sale | The London Left Hand Drive Centre | LHD Cars UK"
+  description="Browse our full inventory of left-hand drive cars for sale in London — from mid-range Skoda and Kia to high-end Ferrari, McLaren and Rolls-Royce. Filter by brand, price, body and fuel."
+>
+  <PageHero
+    eyebrow="Cars for sale"
+    title="Left Hand Drive Cars for Sale"
+    crumb="Cars For Sale"
+    subtitle={`Our current inventory of genuine LHD cars — ${inventoryStats.available} available now from £${inventoryStats.lowest.toLocaleString('en-GB')}, across ${inventoryStats.brands} brands and two London showrooms.`}
+  />
+
+  <section class="py-12 md:py-16 bg-white">
+    <div class="container-mcp">
+      <!-- Filter bar -->
+      <div class="card !p-5 md:!p-6 mb-8" id="filter-bar">
+        <div class="flex items-center justify-between gap-3 mb-4">
+          <h2 class="font-bold text-ink flex items-center gap-2"><Icon name="SlidersHorizontal" size={18} strokeWidth={2.2} class="text-red-deep" /> Filter &amp; sort</h2>
+          <button id="reset-filters" class="text-[0.82rem] font-semibold text-muted hover:text-red-deep transition inline-flex items-center gap-1.5"><Icon name="X" size={14} strokeWidth={2.4} /> Reset</button>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
+          <div class="xl:col-span-1 sm:col-span-2 lg:col-span-1">
+            <label class="field-label" for="f-search">Search</label>
+            <input class="field" id="f-search" type="search" placeholder="Make or model…" />
+          </div>
+          <div>
+            <label class="field-label" for="f-brand">Brand</label>
+            <select class="field" id="f-brand"><option value="">All brands</option>{brandsInStock.map((b) => <option value={b}>{b}</option>)}</select>
+          </div>
+          <div>
+            <label class="field-label" for="f-price">Price</label>
+            <select class="field" id="f-price"><option value="">Any price</option>{priceBands.map((p) => <option value={p.id}>{p.label}</option>)}</select>
+          </div>
+          <div>
+            <label class="field-label" for="f-body">Body</label>
+            <select class="field" id="f-body"><option value="">Any body</option>{bodyTypes.map((b) => <option value={b}>{b}</option>)}</select>
+          </div>
+          <div>
+            <label class="field-label" for="f-fuel">Fuel</label>
+            <select class="field" id="f-fuel"><option value="">Any fuel</option>{fuelTypes.map((f) => <option value={f}>{f}</option>)}</select>
+          </div>
+          <div>
+            <label class="field-label" for="f-sort">Sort</label>
+            <select class="field" id="f-sort">{sortOptions.map((s) => <option value={s.v}>{s.l}</option>)}</select>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-sm text-muted font-mono mb-6" id="result-count" aria-live="polite">Showing {vehicles.length} cars</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6" id="inv-grid">
+        {vehicles.map((v, i) => <VehicleCard vehicle={v} index={i} />)}
+      </div>
+
+      <div id="no-results" class="hidden text-center py-20">
+        <p class="heading-md text-ink mb-3">No cars match those filters</p>
+        <p class="text-muted mb-6">Try widening your search, or contact us — we source LHD cars to order.</p>
+        <button id="clear-2" class="btn btn-navy">Clear filters</button>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Can’t find the LHD car you’re after?" text="We source left-hand drive cars to order from across the UK and Europe. Tell us what you’re looking for and we’ll find it." />
+</Layout>
+
+<script>
+  const grid = document.getElementById('inv-grid');
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('#inv-grid .vehicle-card'));
+  cards.forEach((c) => c.classList.add('is-visible')); // disable scroll-reveal on the filtered grid
+
+  const bands: Record<string, [number, number]> = {
+    'under-10k': [0, 9999], '10k-25k': [10000, 25000], '25k-50k': [25000, 50000], '50k-plus': [50000, Infinity],
+  };
+  const $ = (id: string) => document.getElementById(id) as HTMLInputElement | HTMLSelectElement | null;
+  const fSearch = $('f-search'), fBrand = $('f-brand'), fPrice = $('f-price'), fBody = $('f-body'), fFuel = $('f-fuel'), fSort = $('f-sort');
+  const count = document.getElementById('result-count');
+  const noRes = document.getElementById('no-results');
+
+  function apply() {
+    const q = (fSearch?.value || '').trim().toLowerCase();
+    const brand = fBrand?.value || '', price = fPrice?.value || '', body = fBody?.value || '', fuel = fFuel?.value || '';
+    let shown = 0;
+    cards.forEach((c) => {
+      const d = c.dataset;
+      let ok = true;
+      if (q && !(`${d.title} ${d.brand}`.toLowerCase().includes(q))) ok = false;
+      if (brand && d.brand !== brand) ok = false;
+      if (body && d.body !== body) ok = false;
+      if (fuel && d.fuel !== fuel) ok = false;
+      if (price) {
+        const p = d.price ? parseInt(d.price, 10) : NaN;
+        const [min, max] = bands[price] || [0, Infinity];
+        if (isNaN(p) || p < min || p > max) ok = false;
+      }
+      c.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+    });
+
+    // sort visible
+    const sort = fSort?.value || 'featured';
+    const visible = cards.filter((c) => c.style.display !== 'none');
+    const num = (c: HTMLElement, k: string) => { const n = parseInt(c.dataset[k] || '', 10); return isNaN(n) ? null : n; };
+    visible.sort((a, b) => {
+      if (sort === 'price-asc') return (num(a, 'price') ?? Infinity) - (num(b, 'price') ?? Infinity);
+      if (sort === 'price-desc') return (num(b, 'price') ?? -Infinity) - (num(a, 'price') ?? -Infinity);
+      if (sort === 'year-desc') return (num(b, 'year') ?? 0) - (num(a, 'year') ?? 0);
+      if (sort === 'make-az') return (a.dataset.title || '').localeCompare(b.dataset.title || '');
+      return 0;
+    });
+    if (sort !== 'featured') visible.forEach((c) => grid?.appendChild(c));
+
+    if (count) count.textContent = `Showing ${shown} ${shown === 1 ? 'car' : 'cars'}`;
+    noRes?.classList.toggle('hidden', shown !== 0);
+  }
+
+  [fSearch, fBrand, fPrice, fBody, fFuel, fSort].forEach((el) => {
+    el?.addEventListener('input', apply);
+    el?.addEventListener('change', apply);
+  });
+  const reset = () => { [fBrand, fPrice, fBody, fFuel].forEach((s) => { if (s) (s as HTMLSelectElement).value = ''; }); if (fSearch) fSearch.value = ''; if (fSort) (fSort as HTMLSelectElement).value = 'featured'; apply(); };
+  document.getElementById('reset-filters')?.addEventListener('click', reset);
+  document.getElementById('clear-2')?.addEventListener('click', reset);
+
+  // honour ?q= from the header search
+  const params = new URLSearchParams(window.location.search);
+  const q0 = params.get('q');
+  if (q0 && fSearch) fSearch.value = q0;
+  apply();
+</script>

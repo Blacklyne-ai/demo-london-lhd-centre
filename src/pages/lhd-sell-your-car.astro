@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import ContactMethods from '../components/ContactMethods.astro';
+import OpeningHours from '../components/OpeningHours.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { sellingPromises } from '../data/content';
+---
+<Layout
+  current="/lhd-sell-your-car"
+  title="Sell Your Left Hand Drive Car | Instant Payment | London LHD Centre"
+  description="Sell your left-hand drive car in the UK and Europe for an instant payment today. Free valuation, secure payment, we collect — no hassle. 30+ years' experience."
+>
+  <PageHero
+    eyebrow="Sell your car"
+    title="Sell Your Left Hand Drive Car in the UK and Europe for an Instant Payment Today"
+    subtitle="Our team of experts can help you with all aspects of the buying or selling process, from financing to insurance. We also offer a free valuation service, so you can get an idea of how much your car is worth."
+    crumb="Sell Your Car"
+    primary={{ href: '#valuation', label: 'Get a free valuation' }}
+    secondary={{ href: '/buying-lhd-cars/the-process', label: 'How it works' }}
+  />
+
+  <!-- 4 promises -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-center mb-5">Why sell to us</span>
+        <h2 class="heading-lg text-balance mt-1">Best price. Secure payment. We collect. No hassle.</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+        {sellingPromises.map((p, i) => (
+          <div class={`card-feature fade-in stagger-${i + 1}`}>
+            <span class="tile-icon tile-icon-red mb-5"><Icon name={p.icon} size={22} strokeWidth={2} /></span>
+            <h3 class="font-bold text-lg text-ink mb-2 leading-snug">{p.title}</h3>
+            <p class="text-muted text-[0.93rem] leading-relaxed">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section-navy py-24 md:py-32 relative overflow-hidden">
+    <div class="container-mcp relative">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-light eyebrow-center mb-5">How it works</span>
+        <h2 class="heading-lg text-white text-balance mt-1">From valuation to payment in days.</h2>
+      </div>
+      <ProcessSteps dark={true} />
+    </div>
+  </section>
+
+  <!-- Valuation form -->
+  <section id="valuation" class="py-24 md:py-32 section-snow scroll-mt-28">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        <div class="lg:col-span-7">
+          <QuoteForm mode="valuation" />
+        </div>
+        <div class="lg:col-span-5 flex flex-col gap-6">
+          <div class="card !p-6 md:!p-7">
+            <h3 class="font-bold text-ink text-lg mb-4 flex items-center gap-2.5"><Icon name="ShieldCheck" size={20} strokeWidth={2.1} class="text-red-deep" /> No obligation, ever</h3>
+            <ul class="space-y-3 text-[0.95rem] text-muted">
+              <li class="flex items-start gap-2.5"><Icon name="Check" size={16} strokeWidth={2.6} class="text-red-deep flex-shrink-0 mt-0.5" /> Free, no-obligation valuation</li>
+              <li class="flex items-start gap-2.5"><Icon name="Check" size={16} strokeWidth={2.6} class="text-red-deep flex-shrink-0 mt-0.5" /> Payment by cash, bank transfer or bankers draft</li>
+              <li class="flex items-start gap-2.5"><Icon name="Check" size={16} strokeWidth={2.6} class="text-red-deep flex-shrink-0 mt-0.5" /> We collect from anywhere in the UK or Europe</li>
+              <li class="flex items-start gap-2.5"><Icon name="Check" size={16} strokeWidth={2.6} class="text-red-deep flex-shrink-0 mt-0.5" /> All paperwork handled correctly</li>
+            </ul>
+          </div>
+          <ContactMethods />
+          <OpeningHours />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Ready to sell your LHD car?" text="Contact us today for a free, no-obligation valuation and discover the London LHD Centre difference." />
+</Layout>

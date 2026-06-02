@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { activeBrands } from '../data/brands';
+import { legalNav } from '../data/site';
+
+const linkClass = 'text-ink hover:text-red-deep transition inline-flex items-center gap-1.5';
+
+const mainLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/lhd-cars-for-sale', label: 'Cars For Sale' },
+  { href: '/lhd-cars-sold', label: 'Cars Sold' },
+  { href: '/lhd-sell-your-car', label: 'Sell Your Car' },
+  { href: '/lhd-about-us', label: 'About Us' },
+  { href: '/lhd-contact-us', label: 'Contact' },
+  { href: '/blog', label: 'Blog' },
+];
+
+const buyingLinks = [
+  { href: '/buying-lhd-cars', label: 'Overview' },
+  { href: '/buying-lhd-cars/the-process', label: 'The Process' },
+  { href: '/buying-lhd-cars/the-process/what-types-of-lhd-cars-we-buy', label: 'What We Buy' },
+  { href: '/buying-lhd-cars/faqs', label: 'FAQs' },
+];
+
+const brandLinks = activeBrands.map((b) => ({
+  href: `/lhd-cars-for-sale/${b.slug}`,
+  label: b.name,
+}));
+---
+<Layout
+  current=""
+  title="Sitemap | The London Left Hand Drive Centre"
+  description="All pages on the London LHD Centre website — cars for sale, brands, buying, selling, contact and legal."
+>
+  <PageHero
+    eyebrow="Sitemap"
+    title="Sitemap"
+    subtitle="Every page on our site, in one place."
+    crumb="Sitemap"
+  />
+
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="fade-in">
+          <h2 class="font-mono uppercase tracking-wide text-muted text-sm mb-5">Main</h2>
+          <ul class="space-y-2.5">
+            {mainLinks.map((l) => (
+              <li>
+                <a href={l.href} class={linkClass}>
+                  <Icon name="ChevronRight" size={13} strokeWidth={2.4} class="text-red" />
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="fade-in stagger-1">
+          <h2 class="font-mono uppercase tracking-wide text-muted text-sm mb-5">Buying LHD Cars</h2>
+          <ul class="space-y-2.5">
+            {buyingLinks.map((l) => (
+              <li>
+                <a href={l.href} class={linkClass}>
+                  <Icon name="ChevronRight" size={13} strokeWidth={2.4} class="text-red" />
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="fade-in stagger-2">
+          <h2 class="font-mono uppercase tracking-wide text-muted text-sm mb-5">Browse by brand</h2>
+          <ul class="space-y-2.5">
+            {brandLinks.map((l) => (
+              <li>
+                <a href={l.href} class={linkClass}>
+                  <Icon name="ChevronRight" size={13} strokeWidth={2.4} class="text-red" />
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="fade-in stagger-3">
+          <h2 class="font-mono uppercase tracking-wide text-muted text-sm mb-5">Legal</h2>
+          <ul class="space-y-2.5">
+            {legalNav.map((l) => (
+              <li>
+                <a href={l.href} class={linkClass}>
+                  <Icon name="ChevronRight" size={13} strokeWidth={2.4} class="text-red" />
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

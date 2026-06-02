@@ -1,0 +1,151 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import ContactMethods from '../components/ContactMethods.astro';
+import OpeningHours from '../components/OpeningHours.astro';
+import MapBlock from '../components/MapBlock.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site, telLandline, mailLink, whatsappLink } from '../data/site';
+
+const subjects = ['General Enquiry', 'Buying Enquiry', 'Selling Enquiry', 'UK Registration Service', 'Shipping Quote', 'Other'];
+---
+<Layout
+  current="/lhd-contact-us"
+  title="Contact Us | The London Left Hand Drive Centre | London"
+  description="Contact the London LHD Centre — call 020 7371 9120 or 07801 110000, WhatsApp, or email sales@londonlhdcentre.com. Visit us in Barnes or Chelsea Harbour."
+>
+  <PageHero
+    eyebrow="Contact"
+    title="Get in Touch"
+    subtitle="Call, WhatsApp or email — or visit us in Barnes or Chelsea Harbour. We’re here Monday to Friday."
+    crumb="Contact"
+    primary={{ href: telLandline, label: `Call ${site.phoneLandline}` }}
+    secondary={{ href: whatsappLink, label: 'WhatsApp us' }}
+  />
+
+  <!-- Quick contact + hours -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-3 gap-6 lg:gap-8 items-start">
+        <div class="lg:col-span-2">
+          <span class="eyebrow mb-5">Ways to reach us</span>
+          <h2 class="heading-lg text-balance mt-1 mb-8">However you prefer to get in touch.</h2>
+          <ContactMethods />
+          <p class="text-[0.88rem] text-muted mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span class="inline-flex items-center gap-2"><Icon name="Globe" size={15} strokeWidth={2} class="text-red-deep" /> International callers dial <span class="font-mono text-ink">{site.phoneLandlineDial}</span></span>
+            <a href={site.facebookUrl} target="_blank" rel="noopener" class="inline-flex items-center gap-2 hover:text-red-deep transition"><Icon name="ExternalLink" size={14} strokeWidth={2.2} /> Follow us on Facebook</a>
+          </p>
+        </div>
+        <div class="lg:col-span-1">
+          <OpeningHours />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Message form + addresses -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        <!-- Form -->
+        <div class="lg:col-span-7">
+          <div class="card !p-6 md:!p-8">
+            <h2 class="heading-md text-ink mb-2">Send us a message</h2>
+            <p class="text-muted text-[0.95rem] leading-relaxed mb-6">Choose a subject and tell us what you need — submitting opens your email app with the details filled in, or message us on WhatsApp.</p>
+            <form id="contact-form" class="space-y-4" novalidate>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="field-label" for="cf-name">Your name</label>
+                  <input class="field" id="cf-name" type="text" autocomplete="name" placeholder="Jane Smith" required />
+                </div>
+                <div>
+                  <label class="field-label" for="cf-phone">Phone</label>
+                  <input class="field" id="cf-phone" type="tel" autocomplete="tel" placeholder="07…" />
+                </div>
+              </div>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="field-label" for="cf-email">Email</label>
+                  <input class="field" id="cf-email" type="email" autocomplete="email" placeholder="you@email.com" required />
+                </div>
+                <div>
+                  <label class="field-label" for="cf-subject">Subject</label>
+                  <select class="field" id="cf-subject">{subjects.map((s) => <option value={s}>{s}</option>)}</select>
+                </div>
+              </div>
+              <div>
+                <label class="field-label" for="cf-message">Message</label>
+                <textarea class="field" id="cf-message" rows="5" placeholder="How can we help? Include vehicle details if relevant." required></textarea>
+              </div>
+              <label class="flex items-start gap-3 text-[0.85rem] text-muted cursor-pointer select-none">
+                <input type="checkbox" id="cf-consent" required class="mt-0.5 w-4 h-4 flex-shrink-0" style="accent-color:#C8102E;" />
+                <span>I agree that my details will be used to respond to my enquiry, in line with the <a href="/lhd-privacy" class="text-red-deep underline underline-offset-2">Privacy Policy</a>.</span>
+              </label>
+              <div class="flex flex-col sm:flex-row gap-3 pt-1">
+                <button type="submit" class="btn btn-primary sm:flex-1"><Icon name="Mail" size={16} strokeWidth={2.2} /> Send by email</button>
+                <button type="button" id="cf-whatsapp" class="btn btn-whatsapp"><Icon name="MessageCircle" size={17} strokeWidth={2.2} /> WhatsApp instead</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Addresses -->
+        <div class="lg:col-span-5 flex flex-col gap-4">
+          {site.locations.map((loc) => (
+            <div class="card !p-6">
+              <span class={`badge ${loc.primary ? 'badge-available' : 'badge-call'} mb-3`}>{loc.primary ? 'Main showroom' : 'By appointment'}</span>
+              <h3 class="font-bold text-ink text-lg mb-1">{site.shortName} — {loc.name}</h3>
+              <p class="text-[0.78rem] uppercase tracking-[0.14em] font-mono text-muted mb-3">{loc.role}</p>
+              <address class="not-italic text-muted leading-relaxed mb-4">
+                {loc.street !== loc.area ? <>{loc.street}<br /></> : ''}{loc.area !== loc.street ? <>{loc.area}, </> : ''}{loc.city} {loc.postcode}
+              </address>
+              <a href={loc.directionsUrl} target="_blank" rel="noopener" class="arrow-link text-[0.9rem]">Get directions</a>
+            </div>
+          ))}
+          <div class="card-navy">
+            <h3 class="font-bold text-white text-lg mb-3 flex items-center gap-2.5"><Icon name="Phone" size={18} strokeWidth={2.1} class="text-red-bright" /> Prefer to call?</h3>
+            <p class="text-white/70 text-[0.93rem] mb-4">Telephone enquiries {site.phoneHours.days}, {site.phoneHours.value}.</p>
+            <div class="flex flex-col gap-2.5">
+              <a href={telLandline} class="btn btn-light btn-sm"><Icon name="Phone" size={14} strokeWidth={2.2} /> {site.phoneLandline}</a>
+              <a href={mailLink} class="btn btn-ghost btn-sm"><Icon name="Mail" size={14} strokeWidth={2.2} /> {site.email}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Maps -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <MapBlock />
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  if (form) {
+    const g = (id: string) => (document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null)?.value.trim() || '';
+    const build = () => {
+      const subject = g('cf-subject') || 'General Enquiry';
+      const body = `Subject: ${subject}\nName: ${g('cf-name')}\nPhone: ${g('cf-phone')}\nEmail: ${g('cf-email')}\n\n${g('cf-message')}`;
+      return { subject: `Contact — ${subject}`, body };
+    };
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      const d = build();
+      window.location.href = `mailto:sales@londonlhdcentre.com?subject=${encodeURIComponent(d.subject)}&body=${encodeURIComponent(d.body)}`;
+    });
+    document.getElementById('cf-whatsapp')?.addEventListener('click', () => {
+      const consent = document.getElementById('cf-consent') as HTMLInputElement | null;
+      if (consent && !consent.checked) { consent.focus(); form.reportValidity(); return; }
+      const d = build();
+      window.open(`https://wa.me/447801110000?text=${encodeURIComponent('Hi London LHD Centre,\n' + d.body)}`, '_blank', 'noopener');
+    });
+  }
+</script>

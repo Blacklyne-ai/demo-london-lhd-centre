@@ -1,0 +1,25 @@
+---
+import Icon from './Icon.astro';
+import { processSteps } from '../data/content';
+interface Props { dark?: boolean; }
+const { dark = false } = Astro.props;
+---
+<div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+  {processSteps.map((s, i) => (
+    <div class={`relative fade-in stagger-${i + 1} rounded-[1.5rem] p-7 ${dark ? 'card-navy' : 'card-feature'}`}>
+      <div class="flex items-center justify-between mb-5">
+        <span class={`text-5xl font-black stat-num leading-none ${dark ? 'text-white/12' : 'text-navy/8'}`}>{s.n}</span>
+        <span class={`w-12 h-12 rounded-xl inline-flex items-center justify-center ${dark ? 'tile-icon' : ''}`} style={dark ? '' : 'background: linear-gradient(180deg, #E11D3A, #C8102E); color:#fff;'}>
+          <Icon name={s.icon} size={22} strokeWidth={2} />
+        </span>
+      </div>
+      <h3 class={`font-bold text-[1.05rem] mb-2 leading-snug ${dark ? 'text-white' : 'text-ink'}`}>{s.title}</h3>
+      <p class={`text-[0.9rem] leading-relaxed ${dark ? 'text-white/65' : 'text-muted'}`}>{s.body}</p>
+      {i < processSteps.length - 1 && (
+        <span class="hidden lg:block absolute top-1/2 -right-3 z-10 text-red" aria-hidden="true">
+          <Icon name="ChevronRight" size={22} strokeWidth={2.5} />
+        </span>
+      )}
+    </div>
+  ))}
+</div>

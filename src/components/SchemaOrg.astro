@@ -1,0 +1,103 @@
+---
+import { site } from '../data/site';
+import { activeBrands } from '../data/brands';
+import { services } from '../data/content';
+
+interface Props { schema?: object | null; }
+const { schema = null } = Astro.props;
+
+type Loc = typeof site.locations[number];
+
+const openingSpecs = [
+  {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: site.phoneHours.open,
+    closes: site.phoneHours.close,
+    description: 'Telephone enquiries',
+  },
+  {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: site.showroomHours.open,
+    closes: site.showroomHours.close,
+    description: 'Barnes showroom visits',
+  },
+];
+
+const areaServed = site.serviceArea.map((a) => ({ '@type': 'Place', name: a }));
+
+const locationNode = (loc: Loc) => ({
+  '@type': 'AutoDealer',
+  '@id': `${site.url}#${loc.id}`,
+  name: `${site.name} — ${loc.name}`,
+  url: site.url,
+  logo: `${site.url}/logo.png`,
+  image: `${site.url}/logo.png`,
+  telephone: site.phoneLandlineIntl,
+  email: site.email,
+  priceRange: '££££',
+  currenciesAccepted: 'GBP',
+  paymentAccepted: ['Cash', 'Bank Transfer', 'Bankers Draft'],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: loc.street,
+    addressLocality: loc.city,
+    postalCode: loc.postcode,
+    addressCountry: loc.countryCode,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: loc.lat, longitude: loc.lng },
+  hasMap: loc.mapsUrl,
+  areaServed,
+  openingHoursSpecification: openingSpecs,
+});
+
+const business = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': ['AutoDealer', 'LocalBusiness'],
+      '@id': `${site.url}#business`,
+      name: site.name,
+      alternateName: site.shortName,
+      description: site.description,
+      url: site.url,
+      logo: `${site.url}/logo.png`,
+      image: `${site.url}/logo.png`,
+      telephone: site.phoneLandlineIntl,
+      email: site.email,
+      foundingDate: String(site.stats.sinceYear),
+      slogan: site.tagline,
+      priceRange: '££££',
+      currenciesAccepted: 'GBP',
+      paymentAccepted: ['Cash', 'Bank Transfer', 'Bankers Draft'],
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: site.locations[0].street,
+        addressLocality: site.locations[0].city,
+        postalCode: site.locations[0].postcode,
+        addressCountry: 'GB',
+      },
+      geo: { '@type': 'GeoCoordinates', latitude: site.locations[0].lat, longitude: site.locations[0].lng },
+      hasMap: site.locations[0].mapsUrl,
+      openingHoursSpecification: openingSpecs,
+      sameAs: [site.facebookUrl],
+      areaServed,
+      brand: activeBrands.map((b) => ({ '@type': 'Brand', name: b.name })),
+      knowsAbout: [
+        'Left Hand Drive Cars', 'LHD Car Sales', 'Buying LHD Cars', 'Selling LHD Cars',
+        'UK Registration of Imported Cars', 'Certificate of Conformity (COC)',
+        'Car Import', 'Car Shipping', 'Left Hand Drive Ferrari', 'Left Hand Drive Porsche',
+      ],
+      location: site.locations.map((l) => ({ '@id': `${site.url}#${l.id}` })),
+      makesOffer: services.map((s) => ({
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: s.title, description: s.lead },
+      })),
+    },
+    ...site.locations.map(locationNode),
+  ],
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(business)} />
+{schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}

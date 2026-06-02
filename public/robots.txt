@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://demo-london-lhd-centre.pages.dev/sitemap-index.xml

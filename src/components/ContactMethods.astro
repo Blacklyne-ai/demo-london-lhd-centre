@@ -1,0 +1,30 @@
+---
+import Icon from './Icon.astro';
+import { site, telLandline, telMobile, mailLink, whatsappLink } from '../data/site';
+interface Props { dark?: boolean; }
+const { dark = false } = Astro.props;
+
+const methods = [
+  { icon: 'Phone', iconClass: 'tile-icon-red', label: 'Call — Landline', value: site.phoneLandline, sub: 'Enquiries · Mon–Fri 9:30am–5pm', href: telLandline, mono: true },
+  { icon: 'Phone', iconClass: 'tile-icon', label: 'Call — Mobile', value: site.phoneMobile, sub: 'Direct & quick', href: telMobile, mono: true },
+  { icon: 'MessageCircle', iconClass: 'tile-icon', label: 'WhatsApp', value: 'Message us', sub: 'Send your car’s details', href: whatsappLink, external: true },
+  { icon: 'Mail', iconClass: 'tile-icon', label: 'Email', value: site.email, sub: 'We’ll reply with details', href: mailLink, breakAll: true },
+];
+---
+<div class="grid sm:grid-cols-2 gap-3.5">
+  {methods.map((m) => (
+    <a
+      href={m.href}
+      target={m.external ? '_blank' : undefined}
+      rel={m.external ? 'noopener' : undefined}
+      class={`tile group ${dark ? '!bg-white/5 !border-white/10 hover:!border-red/50' : ''}`}
+    >
+      <span class={`tile-icon ${m.iconClass}`}><Icon name={m.icon} size={22} strokeWidth={2} /></span>
+      <div>
+        <p class={`text-[0.7rem] uppercase tracking-[0.14em] font-mono mb-1 ${dark ? 'text-white/50' : 'text-muted'}`}>{m.label}</p>
+        <p class={`font-bold leading-tight ${m.mono ? 'font-mono' : ''} ${m.breakAll ? 'break-all text-[0.95rem]' : 'text-lg'} ${dark ? 'text-white' : 'text-ink'}`}>{m.value}</p>
+        <p class={`text-[0.82rem] mt-0.5 ${dark ? 'text-white/45' : 'text-muted-light'}`}>{m.sub}</p>
+      </div>
+    </a>
+  ))}
+</div>

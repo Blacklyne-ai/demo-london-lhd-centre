@@ -1,0 +1,41 @@
+---
+// Central Lucide icon map (uses @lucide/astro 1.16 — named imports).
+// Data files reference icons by name; every icon used site-wide is here.
+import {
+  Car, CarFront, Wrench, Settings, Cog, Gauge, Fuel, KeyRound, DoorOpen,
+  Layers, LayoutGrid, ShieldCheck, Award, BadgeCheck, Shield, Lock,
+  Clock, MapPin, MapPinned, Navigation, Compass, Truck, Ship, Globe,
+  Search, SlidersHorizontal, Filter, ArrowUpDown,
+  CircleCheck, CircleDot, Check, CheckCheck, Handshake,
+  FileText, FileCheck, Receipt, MessageCircle, Phone, PhoneCall, Mail,
+  Star, ArrowRight, ArrowUpRight, ArrowLeft, Menu, X,
+  ChevronRight, ChevronDown, ChevronUp, ChevronLeft, ExternalLink, Link2, Share2,
+  Building, Building2, Store, Users, UsersRound, Sparkles, Gem,
+  Euro, Banknote, Wallet, Tag, Package, ShoppingCart, Calendar, CalendarDays,
+  Info, Plus, Minus, Quote, Cookie,
+} from '@lucide/astro';
+
+const MAP: Record<string, any> = {
+  Car, CarFront, Wrench, Settings, Cog, Gauge, Fuel, KeyRound, DoorOpen,
+  Layers, LayoutGrid, ShieldCheck, Award, BadgeCheck, Shield, Lock,
+  Clock, MapPin, MapPinned, Navigation, Compass, Truck, Ship, Globe,
+  Search, SlidersHorizontal, Filter, ArrowUpDown,
+  CircleCheck, CircleDot, Check, CheckCheck, Handshake,
+  FileText, FileCheck, Receipt, MessageCircle, Phone, PhoneCall, Mail,
+  Star, ArrowRight, ArrowUpRight, ArrowLeft, Menu, X,
+  ChevronRight, ChevronDown, ChevronUp, ChevronLeft, ExternalLink, Link2, Share2,
+  Building, Building2, Store, Users, UsersRound, Sparkles, Gem,
+  Euro, Banknote, Wallet, Tag, Package, ShoppingCart, Calendar, CalendarDays,
+  Info, Plus, Minus, Quote, Cookie,
+};
+
+interface Props {
+  name: string;
+  size?: number;
+  class?: string;
+  strokeWidth?: number;
+}
+const { name, size = 24, class: className = '', strokeWidth = 1.75 } = Astro.props;
+const Cmp = MAP[name] ?? CircleDot;
+---
+<Cmp size={size} class={className} stroke-width={strokeWidth} />

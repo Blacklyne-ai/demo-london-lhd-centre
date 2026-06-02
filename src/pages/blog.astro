@@ -1,0 +1,63 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../data/site';
+import { latestNews } from '../data/content';
+---
+<Layout
+  current=""
+  title="LHD Blog | The London Left Hand Drive Centre"
+  description="News and updates from the London LHD Centre — UK registration service, car shipping and the latest left-hand drive arrivals."
+>
+  <PageHero
+    eyebrow="LHD Centre blog"
+    title="News & Updates"
+    subtitle="News from the UK’s leading left-hand drive specialist."
+    crumb="Blog"
+  />
+
+  <!-- ════════ LATEST ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <SectionHeading
+        align="center"
+        eyebrow="Latest"
+        title="Latest from the LHD Centre."
+      />
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-12">
+        {latestNews.map((n, i) => (
+          <div class={`card-feature group fade-in stagger-${i + 1}`}>
+            <span class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background: linear-gradient(180deg, #14365A, #0A1929);">
+              <Icon name={n.icon} size={24} strokeWidth={2} class="text-red-bright" />
+            </span>
+            <h3 class="font-bold text-lg text-ink mb-2 leading-snug">{n.title}</h3>
+            <p class="text-muted text-[0.93rem] leading-relaxed">{n.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ COMING SOON ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <div class="card-feature text-center max-w-2xl mx-auto !py-10 fade-in">
+        <span class="tile-icon tile-icon-red mx-auto mb-5"><Icon name="FileText" size={24} strokeWidth={2} /></span>
+        <h2 class="heading-md text-ink mb-3">More articles coming soon</h2>
+        <p class="text-muted leading-relaxed mb-7 max-w-md mx-auto">Our full blog is being migrated from our previous site and will be back shortly. In the meantime, follow us on Facebook for the latest left-hand drive arrivals and announcements.</p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a href={site.facebookUrl} target="_blank" rel="noopener" class="btn btn-primary">
+            Visit our Facebook
+            <Icon name="ArrowUpRight" size={15} strokeWidth={2.4} />
+          </a>
+          <a href="/lhd-cars-for-sale" class="btn btn-navy">Browse current stock</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

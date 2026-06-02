@@ -1,0 +1,54 @@
+---
+import Icon from './Icon.astro';
+import { whatsappFor } from '../data/site';
+import { priceLabel, type Vehicle } from '../data/inventory';
+interface Props { vehicle: Vehicle; index?: number; }
+const { vehicle: v, index = 0 } = Astro.props;
+const href = `/lhd-cars-for-sale/${v.brandSlug}/${v.slug}`;
+const wa = whatsappFor(`Hi, I'd like to enquire about the ${v.title}${v.year ? ` (${v.year})` : ''} please`);
+const eager = index < 4;
+const specs = [
+  v.year ? String(v.year) : null,
+  v.fuel,
+  v.transmission ? (v.transmission.startsWith('Auto') ? 'Automatic' : 'Manual') : null,
+  v.body,
+].filter(Boolean);
+---
+<article
+  class={`vehicle-card group fade-in stagger-${(index % 4) + 1} ${v.tier === 'ultra' ? 'tier-ultra' : ''}`}
+  data-brand={v.brand}
+  data-status={v.status}
+  data-body={v.body || ''}
+  data-fuel={v.fuel || ''}
+  data-trans={v.transmission ? (v.transmission.startsWith('Auto') ? 'Automatic' : 'Manual') : ''}
+  data-price={v.price ?? ''}
+  data-year={v.year ?? ''}
+  data-title={v.title}
+>
+  <a href={href} class="vehicle-media block" aria-label={`View ${v.title}`}>
+    <img src={v.image} alt={`Left-hand drive ${v.title}`} width="640" height="480" loading={eager ? 'eager' : 'lazy'} />
+    {v.tier === 'ultra' && <span class="badge badge-tier absolute top-3 left-3">Ultra-premium</span>}
+    <span class={`badge absolute top-3 right-3 ${v.status === 'sold' ? 'badge-sold' : v.status === 'call' ? 'badge-call' : 'badge-available'}`}>
+      {v.status === 'sold' ? 'Sold' : v.status === 'call' ? 'Call us' : 'Available'}
+    </span>
+  </a>
+  <div class="p-4 md:p-5 flex flex-col flex-1">
+    <div class="flex items-center justify-between gap-2 mb-1.5">
+      <span class="text-[0.66rem] uppercase tracking-[0.14em] font-mono text-muted">{v.brand}</span>
+      <span class="text-[0.66rem] uppercase tracking-[0.12em] font-mono text-muted inline-flex items-center gap-1">
+        <Icon name="MapPin" size={11} strokeWidth={2.2} />{v.location}
+      </span>
+    </div>
+    <a href={href}><h3 class="font-bold text-ink leading-snug text-[1rem] mb-2 hover:text-red-deep transition">{v.title}</h3></a>
+    <p class="text-[0.8rem] text-muted font-mono mb-4">{specs.join('  ·  ')}</p>
+    <div class="mt-auto flex items-center justify-between gap-2 pt-3 border-t border-line">
+      <span class={`price text-xl ${v.status === 'sold' ? 'price-sold' : v.status === 'call' ? 'price-call' : ''}`}>{priceLabel(v)}</span>
+      <div class="flex items-center gap-1.5">
+        <a href={wa} target="_blank" rel="noopener" class="inline-flex items-center justify-center w-9 h-9 rounded-full border border-line text-muted hover:text-red-deep hover:border-red/40 transition" aria-label={`Enquire about ${v.title} on WhatsApp`}>
+          <Icon name="MessageCircle" size={16} strokeWidth={2.2} />
+        </a>
+        <a href={href} class="btn btn-navy btn-sm">Details<Icon name="ArrowRight" size={14} strokeWidth={2.4} /></a>
+      </div>
+    </div>
+  </div>
+</article>

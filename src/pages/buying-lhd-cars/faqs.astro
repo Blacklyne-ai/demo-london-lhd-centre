@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Faqs from '../../components/Faqs.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { telLandline, whatsappLink, mailLink } from '../../data/site';
+import { faqs } from '../../data/content';
+---
+<Layout
+  current="/buying-lhd-cars"
+  title="Left Hand Drive Car FAQs | London LHD Centre"
+  description="Answers to common questions about buying, selling and registering left-hand drive cars — documentation, valuation, payment and COC papers."
+>
+  <PageHero
+    eyebrow="FAQs"
+    title="Frequently Asked Questions"
+    subtitle="Common questions about buying, selling and registering left-hand drive cars."
+    crumb="FAQs"
+  />
+
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="max-w-3xl mx-auto">
+        <SectionHeading
+          align="center"
+          eyebrow="Good to know"
+          title="Everything you need to know."
+          intro="From documentation and Certificates of Conformity to valuation and payment — here are the answers we are asked most often. Still unsure? Just get in touch."
+        />
+        <div class="mt-12">
+          <Faqs items={faqs} emitSchema={true} />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <div class="text-center max-w-2xl mx-auto fade-in">
+        <span class="tile-icon tile-icon-red mx-auto mb-6"><Icon name="MessageCircle" size={24} strokeWidth={2} /></span>
+        <h2 class="heading-lg text-balance mt-1 mb-4">Still have a question?</h2>
+        <p class="text-lg text-muted leading-relaxed mb-8 text-pretty">
+          If your question is not answered above, our team is happy to help. Call us, message us on WhatsApp, or send an email and we will get back to you quickly.
+        </p>
+        <div class="flex flex-col sm:flex-row flex-wrap gap-3 justify-center">
+          <a href={telLandline} class="btn btn-primary btn-lg">
+            <Icon name="Phone" size={17} strokeWidth={2.3} />
+            Call us
+          </a>
+          <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg">
+            <Icon name="MessageCircle" size={18} strokeWidth={2.2} />
+            WhatsApp
+          </a>
+          <a href={mailLink} class="btn btn-outline btn-lg">
+            <Icon name="Mail" size={17} strokeWidth={2.3} />
+            Email
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

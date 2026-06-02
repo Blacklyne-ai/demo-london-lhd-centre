@@ -1,0 +1,143 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { site, telLandline, mailLink } from '../data/site';
+---
+<Layout
+  current=""
+  title="Terms & Conditions | The London Left Hand Drive Centre"
+  description="The terms governing the sale and purchase of vehicles with the London LHD Centre."
+>
+  <PageHero
+    eyebrow="Legal"
+    title="Terms & Conditions"
+    subtitle="The terms that apply when buying from or selling to us."
+    crumb="Terms & Conditions"
+  />
+
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-narrow">
+      <div class="legal-prose fade-in">
+        <p><strong>Last updated:</strong> 02/06/2026</p>
+
+        <h2>Introduction &amp; acceptance</h2>
+        <p>
+          These terms and conditions govern the sale and purchase of vehicles between you and
+          {site.name}. By enquiring about, reserving, buying or selling a vehicle with us, you
+          confirm that you have read, understood and accepted these terms. Please read them
+          carefully. If there is anything you do not understand, contact us before you proceed.
+        </p>
+
+        <h2>About us</h2>
+        <p>
+          {site.name} is a specialist left-hand drive (LHD) car dealer operating from two London
+          showrooms:
+        </p>
+        <ul>
+          <li>Barnes, London <strong>SW13 9JJ</strong> — our main showroom and inventory base.</li>
+          <li>Chelsea Harbour, London <strong>SW10 0XG</strong> — our premium showroom, by appointment.</li>
+        </ul>
+        <p>
+          You can reach us by email at <a href={mailLink}>{site.email}</a> or by telephone on
+          <a href={telLandline}>{site.phoneLandline}</a>. Wherever these terms refer to "we", "us"
+          or "our", they refer to {site.name}.
+        </p>
+
+        <h2>Vehicle descriptions &amp; availability</h2>
+        <p>
+          We strive for accuracy in every vehicle description, specification and price we publish.
+          However, specifications and availability are subject to change, and details may be
+          updated or corrected without notice. Photographs and images are for illustration only;
+          the actual vehicle, its trim, colour and equipment may differ. Mileage, service history
+          and condition are described to the best of our knowledge at the time of listing.
+        </p>
+        <p>
+          A vehicle shown as available may be reserved or sold by the time you enquire, as our
+          stock moves quickly. Please confirm all details, including specification and availability,
+          with us directly before committing to a purchase.
+        </p>
+
+        <h2>Pricing</h2>
+        <p>
+          All prices are quoted in pounds sterling (£ GBP) and are subject to change. Prices
+          include VAT where applicable, and any VAT position will be confirmed at the point of sale.
+          Vehicles shown as "Call us", "POA" (price on application) or similar are priced by
+          enquiry; please contact us for the current price. We reserve the right to correct any
+          pricing errors, in which case we will let you know before the sale is concluded.
+        </p>
+
+        <h2>Deposits &amp; payment</h2>
+        <p>
+          We accept payment by cash, bank transfer or bankers' draft. Other payment arrangements
+          may be available by agreement. A deposit is required to reserve a vehicle and to take it
+          off sale. The balance is due in full, and cleared, before collection or delivery of the
+          vehicle. A vehicle remains our property until payment has been received in full and has
+          cleared.
+        </p>
+
+        <h2>Selling your car to us</h2>
+        <p>
+          If you are selling your left-hand drive car to us, we offer a free, no-obligation
+          valuation. We may arrange an inspection of the vehicle before confirming our offer, and
+          our offer is subject to that inspection and to the vehicle matching the description you
+          have provided.
+        </p>
+        <ul>
+          <li>Any outstanding finance on the vehicle must be settled — we can usually help arrange this as part of the transaction.</li>
+          <li>You must be the legal owner of the vehicle, or be authorised to sell it.</li>
+          <li>The V5C registration document and all relevant paperwork, including service history and spare keys where available, must be provided.</li>
+        </ul>
+
+        <h2>Imported cars, UK registration &amp; COC papers</h2>
+        <p>
+          Many of the vehicles we handle are imported left-hand drive cars. Where a vehicle requires
+          UK registration, we can assist with the process. A Certificate of Conformity (COC) and
+          other supporting documentation may be required to register or re-register a vehicle.
+          Responsibility for registration, timescales and any associated fees will be confirmed in
+          writing for each transaction. Imported vehicles may be supplied registered or unregistered
+          depending on the arrangement agreed with you.
+        </p>
+
+        <h2>Delivery &amp; collection</h2>
+        <p>
+          You are welcome to collect your vehicle from our Barnes showroom by appointment. We can
+          also arrange delivery throughout the United Kingdom, Europe, the USA and the Middle East.
+          Delivery is arranged by agreement, and any delivery costs, timescales and logistics will
+          be confirmed before your purchase is finalised. Risk in the vehicle passes to you on
+          collection or delivery.
+        </p>
+
+        <h2>Your statutory rights</h2>
+        <p>
+          Nothing in these terms affects your statutory rights as a consumer. Where you buy as a
+          consumer, your rights under the Consumer Rights Act 2015 — including those relating to
+          goods being of satisfactory quality, fit for purpose and as described — remain unaffected.
+        </p>
+
+        <h2>Limitation of liability</h2>
+        <p>
+          We do not exclude or limit our liability to you where it would be unlawful to do so. This
+          includes liability for death or personal injury caused by our negligence, for fraud or
+          fraudulent misrepresentation, or for any other liability that cannot be excluded under
+          law. Subject to that, we will not be liable for any indirect or consequential loss, and
+          our total liability arising from any transaction will not exceed the price paid for the
+          vehicle concerned.
+        </p>
+
+        <h2>Governing law</h2>
+        <p>
+          These terms, and any dispute or claim arising out of or in connection with them or their
+          subject matter, are governed by and construed in accordance with the law of England and
+          Wales, and are subject to the exclusive jurisdiction of the courts of England and Wales.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          If you have any questions about these terms, please contact {site.name} by email at
+          <a href={mailLink}>{site.email}</a> or by telephone on
+          <a href={telLandline}>{site.phoneLandline}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>

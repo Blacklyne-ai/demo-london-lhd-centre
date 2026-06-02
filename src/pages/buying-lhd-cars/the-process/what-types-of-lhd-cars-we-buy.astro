@@ -1,0 +1,69 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Icon from '../../../components/Icon.astro';
+import PageHero from '../../../components/PageHero.astro';
+import SectionHeading from '../../../components/SectionHeading.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import { whatWeBuy } from '../../../data/content';
+---
+<Layout
+  current="/buying-lhd-cars"
+  title="What Types of LHD Cars We Buy | London LHD Centre"
+  description="We buy a wide range of left-hand drive cars, from mid-range to high-end — Aston Martin, Ferrari, McLaren, Porsche, Rolls-Royce and many more."
+>
+  <PageHero
+    eyebrow="What we buy"
+    title="What Types of LHD Cars We Buy"
+    subtitle={whatWeBuy.intro}
+    crumb="What We Buy"
+    primary={{ href: '/lhd-sell-your-car', label: 'Get a free valuation' }}
+  />
+
+  <!-- ════════ HIGH END ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="High end"
+        title="Premium & luxury marques we buy"
+        intro="From grand tourers to flagship saloons and supercars — we actively purchase left-hand drive examples of the world’s most sought-after marques."
+      />
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 md:gap-6 mt-12">
+        {whatWeBuy.highEnd.map((b, i) => (
+          <div class={`card flex flex-col fade-in stagger-${(i % 5) + 1}`}>
+            <span class="badge badge-tier mb-3 self-start">High end</span>
+            <span class="font-bold text-ink leading-snug">{b.brand}</span>
+            <span class="text-muted text-sm mt-1 leading-relaxed">{b.models}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ MID RANGE ════════ -->
+  <section class="section-navy py-24 md:py-32 relative overflow-hidden">
+    <div class="glow-orb" style="width: 440px; height: 440px; top: -150px; right: -100px; background: #C8102E; opacity: 0.14;"></div>
+    <div class="glow-orb" style="width: 380px; height: 380px; bottom: -140px; left: -90px; background: #4F89C2; opacity: 0.2;"></div>
+    <div class="container-mcp relative">
+      <SectionHeading
+        eyebrow="Mid range"
+        title="Mid-range makes we buy"
+        light={true}
+        intro="Everyday left-hand drive cars are just as welcome. We buy popular mid-range makes across the UK and Europe."
+      />
+      <div class="flex flex-wrap gap-2 mt-10 fade-in">
+        {whatWeBuy.midRange.map((make) => (
+          <span class="pill pill-dark">{make}</span>
+        ))}
+      </div>
+      <div class="mt-12 max-w-2xl fade-in stagger-1">
+        <p class="text-lg text-white/70 leading-relaxed mb-7 text-pretty">{whatWeBuy.outro}</p>
+        <a href="/lhd-sell-your-car" class="btn btn-primary btn-lg">
+          Get a free valuation
+          <Icon name="ArrowRight" size={16} strokeWidth={2.5} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

@@ -1,0 +1,91 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import MapBlock from '../components/MapBlock.astro';
+import ReviewsSection from '../components/ReviewsSection.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site } from '../data/site';
+import { aboutStory, aboutValues } from '../data/content';
+---
+<Layout
+  current="/lhd-about-us"
+  title="About Us | The London Left Hand Drive Centre | Since 1995"
+  description="The UK's leading left-hand drive car specialist for over 30 years — two London showrooms, all major brands and international delivery."
+>
+  <PageHero
+    eyebrow="About us"
+    title="Over 30 Years in Left Hand Drive Cars"
+    subtitle={site.tagline}
+    crumb="About Us"
+    image="/images/cars/rolls-royce-ghost.jpg"
+    primary={{ href: '/lhd-cars-for-sale', label: 'View stock' }}
+    secondary={{ href: '/lhd-contact-us', label: 'Contact us' }}
+  />
+
+  <!-- ════════ OUR STORY ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="relative fade-in">
+          <div class="card !p-0 relative rounded-[2rem] overflow-hidden border border-line">
+            <img
+              src="/images/cars/mercedes-sl560.jpg"
+              alt="A left-hand drive Mercedes-Benz SL from our inventory"
+              width="1000"
+              height="750"
+              class="w-full aspect-[4/3] object-cover"
+              loading="lazy"
+            />
+            <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 55%, rgba(5,11,20,0.45) 100%);"></div>
+          </div>
+          <div class="absolute -bottom-6 -right-2 md:right-6 glass-light rounded-2xl px-6 py-5 max-w-[15rem]" style="box-shadow: var(--shadow-lift);">
+            <p class="big-number text-ink" style="font-size: clamp(2rem,5vw,2.75rem);"><span data-count={site.stats.yearsExperience} data-suffix="+">{site.stats.yearsExperience}+</span></p>
+            <p class="text-[0.7rem] uppercase tracking-[0.16em] text-muted mt-1 font-mono">Years specialising in LHD cars</p>
+          </div>
+        </div>
+        <div class="fade-in stagger-1">
+          <span class="eyebrow mb-5">Our story</span>
+          <h2 class="heading-lg text-balance mt-1 mb-6">The UK’s most established LHD specialist.</h2>
+          {aboutStory.map((p) => (
+            <p class="text-muted leading-relaxed mb-5 last:mb-0 text-pretty">{p}</p>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ WHY CHOOSE US ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <SectionHeading
+        align="center"
+        eyebrow="Why choose us"
+        title="The London LHD Centre difference."
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+        {aboutValues.map((v, i) => (
+          <div class={`card-feature fade-in stagger-${(i % 5) + 1}`}>
+            <span class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background: linear-gradient(180deg, #14365A, #0A1929);">
+              <Icon name={v.icon} size={24} strokeWidth={2} class="text-red-bright" />
+            </span>
+            <h3 class="font-bold text-lg text-ink mb-2 leading-snug">{v.title}</h3>
+            <p class="text-muted text-[0.93rem] leading-relaxed">{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ TWO LOCATIONS ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <MapBlock />
+    </div>
+  </section>
+
+  <ReviewsSection dark={true} />
+
+  <CtaBand />
+</Layout>

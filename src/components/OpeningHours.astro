@@ -1,0 +1,64 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+interface Props { dark?: boolean; }
+const { dark = false } = Astro.props;
+const rows = [
+  { key: 'phone', icon: 'Phone', label: site.phoneHours.label, days: site.phoneHours.days, value: site.phoneHours.value },
+  { key: 'show', icon: 'Store', label: site.showroomHours.label, days: site.showroomHours.days, value: site.showroomHours.value },
+];
+---
+<div class={`rounded-[1.5rem] p-6 md:p-7 ${dark ? 'glass text-white' : 'card'}`} data-dual-hours>
+  <h3 class={`font-bold text-lg flex items-center gap-2.5 mb-5 ${dark ? 'text-white' : 'text-ink'}`}>
+    <Icon name="Clock" size={20} strokeWidth={2.1} class={dark ? 'text-red-bright' : 'text-red-deep'} />
+    Opening hours
+  </h3>
+  <div class="space-y-3">
+    {rows.map((r) => (
+      <div class={`rounded-2xl p-4 ${dark ? 'bg-white/5 border border-white/10' : 'bg-snow border border-line'}`} data-oh={r.key}>
+        <div class="flex items-center justify-between gap-3 mb-2">
+          <span class={`font-semibold inline-flex items-center gap-2 ${dark ? 'text-white' : 'text-ink'}`}>
+            <Icon name={r.icon} size={16} strokeWidth={2.1} class={dark ? 'text-white/70' : 'text-muted'} />{r.label}
+          </span>
+          <span class="inline-flex items-center gap-2 text-[0.72rem] font-semibold">
+            <span class="status-dot status-dot-closed js-dot"></span>
+            <span class={`js-state ${dark ? 'text-white/85' : 'text-ink/80'}`}>…</span>
+          </span>
+        </div>
+        <div class="flex items-center justify-between gap-3">
+          <span class={`text-[0.85rem] ${dark ? 'text-white/60' : 'text-muted'}`}>{r.days}</span>
+          <span class={`font-mono text-[0.9rem] font-semibold ${dark ? 'text-white' : 'text-ink'}`}>{r.value}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+  <p class={`text-[0.82rem] mt-4 leading-relaxed ${dark ? 'text-white/55' : 'text-muted'}`}>
+    Saturday &amp; Sunday by appointment. International callers dial <span class="font-mono">{site.phoneLandlineDial}</span>.
+  </p>
+</div>
+
+<script>
+  function updDual() {
+    const now = new Date();
+    const day = now.getDay();
+    const mins = now.getHours() * 60 + now.getMinutes();
+    const wd = day >= 1 && day <= 5;
+    const conf: Record<string, [number, number, string]> = {
+      phone: [570, 1020, '5:00pm'],
+      show: [660, 900, '3:00pm'],
+    };
+    document.querySelectorAll('[data-dual-hours] [data-oh]').forEach((row) => {
+      const el = row as HTMLElement;
+      const key = el.dataset.oh as string;
+      const c = conf[key];
+      if (!c) return;
+      const open = wd && mins >= c[0] && mins < c[1];
+      const dot = el.querySelector('.js-dot');
+      const st = el.querySelector('.js-state');
+      if (dot) dot.className = 'status-dot js-dot ' + (open ? 'status-dot-open' : 'status-dot-closed');
+      if (st) st.textContent = open ? `Open · until ${c[2]}` : 'Closed';
+    });
+  }
+  updDual();
+  setInterval(updDual, 60000);
+</script>

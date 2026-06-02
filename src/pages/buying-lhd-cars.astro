@@ -1,0 +1,101 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { sellingPromises } from '../data/content';
+
+const steps = [
+  {
+    title: 'The Process',
+    body: 'From your first call to payment in days — exactly how we buy your LHD car.',
+    icon: 'CircleCheck',
+    href: '/buying-lhd-cars/the-process',
+  },
+  {
+    title: 'What We Buy',
+    body: 'From Skoda to Ferrari — the left-hand drive cars we actively look for.',
+    icon: 'Car',
+    href: '/buying-lhd-cars/the-process/what-types-of-lhd-cars-we-buy',
+  },
+  {
+    title: 'FAQs',
+    body: 'Common questions about selling your LHD car to us, answered.',
+    icon: 'Quote',
+    href: '/buying-lhd-cars/faqs',
+  },
+];
+---
+<Layout
+  current="/buying-lhd-cars"
+  title="Buying LHD Cars | We Buy Left Hand Drive Cars | London LHD Centre"
+  description="We urgently require all LHD cars and pay the best prices — secure payment, free UK & Europe collection, no hassle. Get a free valuation today."
+>
+  <PageHero
+    eyebrow="We buy LHD cars"
+    title="We Buy Your Left Hand Drive Car"
+    subtitle="We urgently require all LHD cars and will pay the best prices. Secure payment, free collection across the UK and Europe, and no hassle."
+    crumb="Buying LHD Cars"
+    primary={{ href: '/lhd-sell-your-car', label: 'Get a free valuation' }}
+    secondary={{ href: '/buying-lhd-cars/the-process', label: 'How it works' }}
+  />
+
+  <!-- ════════ WHY SELL TO US ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="Why sell to us"
+        title="Four reasons selling to us is simple."
+        align="center"
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 mt-12">
+        {sellingPromises.map((p, i) => (
+          <div class={`card-feature fade-in stagger-${i + 1}`}>
+            <span class="tile-icon tile-icon-red mb-4"><Icon name={p.icon} size={22} strokeWidth={2} /></span>
+            <h3 class="font-bold text-lg text-ink mb-2 leading-snug">{p.title}</h3>
+            <p class="text-muted text-[0.93rem] leading-relaxed">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ HOW IT WORKS — LINK CARDS ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="How it works"
+        title="Selling your LHD car, step by step."
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 mt-12">
+        {steps.map((s, i) => (
+          <a href={s.href} class={`card-feature group flex flex-col fade-in stagger-${i + 1}`}>
+            <span class="tile-icon tile-icon-red mb-5"><Icon name={s.icon} size={22} strokeWidth={2} /></span>
+            <h3 class="font-bold text-lg text-ink mb-2 leading-snug group-hover:text-red-deep transition">{s.title}</h3>
+            <p class="text-muted text-[0.93rem] leading-relaxed mb-6">{s.body}</p>
+            <span class="arrow-link mt-auto">Learn more</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ THE PROCESS — 4 STEPS ════════ -->
+  <section class="section-navy py-24 md:py-32 relative overflow-hidden">
+    <div class="glow-orb" style="width: 440px; height: 440px; top: -150px; right: -100px; background: #C8102E; opacity: 0.14;"></div>
+    <div class="container-mcp relative">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-light eyebrow-center mb-5">The process</span>
+        <h2 class="heading-lg text-white text-balance mt-1">From first call to payment in days.</h2>
+      </div>
+      <ProcessSteps dark={true} />
+    </div>
+  </section>
+
+  <CtaBand
+    title="Ready to sell your LHD car?"
+    text="Contact us today for a free, no-obligation valuation and discover the London LHD Centre difference."
+  />
+</Layout>

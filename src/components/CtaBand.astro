@@ -1,0 +1,40 @@
+---
+import Icon from './Icon.astro';
+import { site, telLandline, telMobile, whatsappLink } from '../data/site';
+interface Props { title?: string; text?: string; }
+const {
+  title = 'Looking for an LHD car — or want to sell yours?',
+  text = 'Whether you are buying or selling, we provide the best possible service. Call us, message us on WhatsApp, or drop in to Barnes or Chelsea Harbour.',
+} = Astro.props;
+---
+<section class="section-navy py-20 md:py-24 relative overflow-hidden">
+  <div class="glow-orb" style="width: 420px; height: 420px; top: -120px; right: -80px; background: #C8102E; opacity: 0.18;"></div>
+  <div class="glow-orb" style="width: 380px; height: 380px; bottom: -140px; left: -90px; background: #4F89C2; opacity: 0.3;"></div>
+  <div class="container-mcp relative">
+    <div class="max-w-3xl fade-in">
+      <span class="eyebrow eyebrow-light mb-5">Get in touch</span>
+      <h2 class="heading-lg text-white text-balance mb-5">{title}</h2>
+      <p class="text-lg text-white/70 leading-relaxed mb-8 max-w-2xl text-pretty">{text}</p>
+      <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+        <a href={telLandline} class="btn btn-primary btn-lg">
+          <Icon name="Phone" size={17} strokeWidth={2.3} />
+          {site.phoneLandline}
+        </a>
+        <a href={telMobile} class="btn btn-light btn-lg">
+          <Icon name="Phone" size={17} strokeWidth={2.3} />
+          {site.phoneMobile}
+        </a>
+        <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg">
+          <Icon name="MessageCircle" size={18} strokeWidth={2.2} />
+          WhatsApp
+        </a>
+      </div>
+      <p class="text-sm text-white/45 mt-6 flex flex-wrap items-center gap-x-2 gap-y-1">
+        <Icon name="MapPin" size={15} strokeWidth={2} />
+        76 Glentham Road, Barnes SW13 9JJ
+        <span class="opacity-40">·</span>
+        Chelsea Harbour, London SW10 0XG
+      </p>
+    </div>
+  </div>
+</section>

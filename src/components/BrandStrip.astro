@@ -1,0 +1,19 @@
+---
+import { featuredBrands } from '../data/brands';
+interface Props { brands?: string[]; dark?: boolean; }
+const { brands = featuredBrands, dark = true } = Astro.props;
+const items = [...brands, 'and many more'];
+---
+<section class={`py-6 overflow-hidden ${dark ? 'bg-navy-deep border-y border-white/5' : 'bg-snow border-y border-line'}`}>
+  <div class="marquee">
+    {Array.from({ length: 2 }).map(() => (
+      <div class="marquee-track" aria-hidden="true">
+        {items.map((b) => (
+          <span class={`brand-mark inline-flex items-center gap-3 ${dark ? '' : '!text-muted-light'}`}>
+            {b}<span class="text-red">/</span>
+          </span>
+        ))}
+      </div>
+    ))}
+  </div>
+</section>

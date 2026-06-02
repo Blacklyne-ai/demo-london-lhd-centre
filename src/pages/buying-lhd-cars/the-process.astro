@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Icon from '../../components/Icon.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ProcessSteps from '../../components/ProcessSteps.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { sellReasons } from '../../data/content';
+---
+<Layout
+  current="/buying-lhd-cars"
+  title="The Process of Selling Your LHD Car | London LHD Centre"
+  description="Why sell your LHD car to us: competitive offers, a hassle-free process, immediate payment, expert appraisals and national & international service."
+>
+  <PageHero
+    eyebrow="The process"
+    title="The Process of Selling Your LHD Car"
+    subtitle="Why sell your LHD car to us?"
+    crumb="The Process"
+    primary={{ href: '/lhd-sell-your-car', label: 'Get a free valuation' }}
+    secondary={{ href: '/buying-lhd-cars/faqs', label: 'Read the FAQs' }}
+  />
+
+  <!-- ════════ WHY SELL TO US ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="Why sell to us"
+        title="Why sell your LHD car to us?"
+        align="center"
+      />
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 mt-12">
+        {sellReasons.map((r, i) => (
+          <div class={`card-feature fade-in stagger-${(i % 5) + 1}`}>
+            <span class="tile-icon tile-icon-red mb-5"><Icon name={r.icon} size={22} strokeWidth={2} /></span>
+            <h3 class="font-bold text-lg text-ink mb-2 leading-snug">{r.title}</h3>
+            <p class="text-muted text-[0.93rem] leading-relaxed">{r.body}</p>
+          </div>
+        ))}
+        <div class="card-navy flex flex-col fade-in stagger-1">
+          <span class="tile-icon tile-icon-gold mb-5"><Icon name="Sparkles" size={22} strokeWidth={2} /></span>
+          <h3 class="font-bold text-lg text-white mb-2 leading-snug">Ready to sell?</h3>
+          <p class="text-white/65 text-[0.93rem] leading-relaxed mb-7">Get a free, no-obligation valuation today.</p>
+          <a href="/lhd-sell-your-car" class="btn btn-primary mt-auto self-start">Get a free valuation<Icon name="ArrowRight" size={15} strokeWidth={2.4} /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ HOW IT WORKS ════════ -->
+  <section class="section-navy py-24 md:py-32 relative overflow-hidden">
+    <div class="glow-orb" style="width: 440px; height: 440px; top: -150px; left: -100px; background: #C8102E; opacity: 0.14;"></div>
+    <div class="container-mcp relative">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-light eyebrow-center mb-5">Step by step</span>
+        <h2 class="heading-lg text-white text-balance mt-1">How it works, step by step.</h2>
+      </div>
+      <ProcessSteps dark={true} />
+    </div>
+  </section>
+
+  <CtaBand
+    title="Ready to sell your LHD car?"
+    text="Contact us today for a free, no-obligation valuation and discover the London LHD Centre difference."
+  />
+</Layout>

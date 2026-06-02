@@ -1,0 +1,147 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+import { allBrandsList } from '../data/brands';
+interface Props {
+  title?: string;
+  intro?: string;
+  mode?: 'valuation' | 'enquiry';
+  vehicleRef?: string;
+}
+const {
+  title = 'Free, no-obligation valuation',
+  intro = 'Tell us about your left-hand drive car and we’ll come back with a competitive offer. No account, no sign-up — submitting opens your email app with the details filled in, or message us on WhatsApp.',
+  mode = 'valuation',
+  vehicleRef = '',
+} = Astro.props;
+const conditions = ['Excellent', 'Good', 'Fair', 'Project'];
+---
+<div class="card !p-6 md:!p-8 fade-in">
+  <h3 class="heading-md text-ink mb-2">{title}</h3>
+  <p class="text-muted text-[0.95rem] leading-relaxed mb-6 text-pretty">{intro}</p>
+
+  <form id="quote-form" data-email={site.email} data-wa={site.phoneMobileDigits} data-mode={mode} data-ref={vehicleRef} class="space-y-4" novalidate>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <div>
+        <label class="field-label" for="qf-name">Your name</label>
+        <input class="field" id="qf-name" name="name" type="text" autocomplete="name" placeholder="Jane Smith" required />
+      </div>
+      <div>
+        <label class="field-label" for="qf-phone">Phone</label>
+        <input class="field" id="qf-phone" name="phone" type="tel" autocomplete="tel" placeholder="07…" required />
+      </div>
+    </div>
+    <div>
+      <label class="field-label" for="qf-email">Email</label>
+      <input class="field" id="qf-email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required />
+    </div>
+
+    {mode === 'valuation' ? (
+      <>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="field-label" for="qf-make">Car make</label>
+            <select class="field" id="qf-make" name="make" required>
+              <option value="" disabled selected>Select make…</option>
+              {allBrandsList.map((b) => <option value={b}>{b}</option>)}
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="qf-model">Model</label>
+            <input class="field" id="qf-model" name="model" type="text" placeholder="e.g. 911 Carrera" required />
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-3 gap-4">
+          <div>
+            <label class="field-label" for="qf-year">Year</label>
+            <input class="field" id="qf-year" name="year" type="text" inputmode="numeric" placeholder="2020" />
+          </div>
+          <div>
+            <label class="field-label" for="qf-mileage">Mileage</label>
+            <input class="field" id="qf-mileage" name="mileage" type="text" inputmode="numeric" placeholder="e.g. 35,000" />
+          </div>
+          <div>
+            <label class="field-label" for="qf-condition">Condition</label>
+            <select class="field" id="qf-condition" name="condition">
+              {conditions.map((c) => <option value={c}>{c}</option>)}
+            </select>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="field-label" for="qf-location">Your location</label>
+            <input class="field" id="qf-location" name="location" type="text" placeholder="UK city or European country" />
+          </div>
+          <div>
+            <label class="field-label" for="qf-price">Asking price</label>
+            <input class="field" id="qf-price" name="price" type="text" placeholder="£ or ‘open to offers’" />
+          </div>
+        </div>
+      </>
+    ) : (
+      <input type="hidden" id="qf-ref" value={vehicleRef} />
+    )}
+
+    <div>
+      <label class="field-label" for="qf-message">{mode === 'valuation' ? 'Anything else? (service history, extras, photos to follow)' : 'Your message'}</label>
+      <textarea class="field" id="qf-message" name="message" rows="4" placeholder={mode === 'valuation' ? 'Full service history, recent work, any notes…' : 'Your question about this vehicle…'} required={mode === 'enquiry'}></textarea>
+    </div>
+
+    <label class="flex items-start gap-3 text-[0.85rem] text-muted cursor-pointer select-none">
+      <input type="checkbox" id="qf-consent" required class="mt-0.5 w-4 h-4 accent-red flex-shrink-0" style="accent-color:#C8102E;" />
+      <span>I agree that my details will be used to respond to my enquiry, in line with the <a href="/lhd-privacy" class="text-red-deep underline underline-offset-2">Privacy Policy</a>.</span>
+    </label>
+
+    <div class="flex flex-col sm:flex-row gap-3 pt-1">
+      <button type="submit" class="btn btn-primary btn-block sm:!w-auto sm:flex-1">
+        <Icon name="Mail" size={16} strokeWidth={2.2} />
+        {mode === 'valuation' ? 'Get my valuation by email' : 'Send enquiry by email'}
+      </button>
+      <button type="button" id="qf-whatsapp" class="btn btn-whatsapp">
+        <Icon name="MessageCircle" size={17} strokeWidth={2.2} />
+        WhatsApp instead
+      </button>
+    </div>
+    <p class="text-[0.78rem] text-muted-light flex items-center gap-1.5 pt-1">
+      <Icon name="Info" size={13} strokeWidth={2.2} />
+      Prefer to send photos? WhatsApp us — we never share your details.
+    </p>
+  </form>
+</div>
+
+<script>
+  const form = document.getElementById('quote-form') as HTMLFormElement | null;
+  if (form) {
+    const email = form.dataset.email || '';
+    const wa = form.dataset.wa || '';
+    const mode = form.dataset.mode || 'valuation';
+    const ref = form.dataset.ref || '';
+    const g = (id: string) => (document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null)?.value.trim() || '';
+
+    const collect = () => {
+      if (mode === 'enquiry') {
+        return { subject: `Enquiry: ${ref || 'LHD vehicle'}`,
+          body: `Vehicle: ${ref}\nName: ${g('qf-name')}\nPhone: ${g('qf-phone')}\nEmail: ${g('qf-email')}\n\n${g('qf-message')}` };
+      }
+      return {
+        subject: `LHD valuation — ${g('qf-make')} ${g('qf-model')} ${g('qf-year')}`.trim(),
+        body: `Name: ${g('qf-name')}\nPhone: ${g('qf-phone')}\nEmail: ${g('qf-email')}\nMake: ${g('qf-make')}\nModel: ${g('qf-model')}\nYear: ${g('qf-year')}\nMileage: ${g('qf-mileage')}\nCondition: ${g('qf-condition')}\nLocation: ${g('qf-location')}\nAsking price: ${g('qf-price')}\n\n${g('qf-message')}`,
+      };
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      const d = collect();
+      window.location.href = `mailto:${email}?subject=${encodeURIComponent(d.subject)}&body=${encodeURIComponent(d.body)}`;
+    });
+    document.getElementById('qf-whatsapp')?.addEventListener('click', () => {
+      const consent = document.getElementById('qf-consent') as HTMLInputElement | null;
+      if (consent && !consent.checked) { consent.focus(); form.reportValidity(); return; }
+      const d = collect();
+      const text = `Hi London LHD Centre,\n${d.body}`;
+      window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+    });
+  }
+</script>

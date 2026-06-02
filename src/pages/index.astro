@@ -1,0 +1,249 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import BrandStrip from '../components/BrandStrip.astro';
+import VehicleCard from '../components/VehicleCard.astro';
+import BrandMark from '../components/BrandMark.astro';
+import MapBlock from '../components/MapBlock.astro';
+import ReviewsSection from '../components/ReviewsSection.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { site, telLandline, whatsappLink, trustSignals } from '../data/site';
+import { featuredBrands, activeBrands } from '../data/brands';
+import { vehicles } from '../data/inventory';
+import { sellingPromises, latestNews, aboutStory } from '../data/content';
+
+const featuredSlugs = [
+  '12c-spider-3-8-2013', 's2000', 'q5-2-0-diesel-2020', 'sl-560-v8-auto-1989',
+  'macan-s-3-0-v6-pdk', 'sorento-1-6-hybrid-2022', 'discovery-sport-p300e-2023', 'ghost-6-6-v12-auto',
+];
+const featured = featuredSlugs
+  .map((s) => vehicles.find((v) => v.slug === s))
+  .filter((v): v is NonNullable<typeof v> => Boolean(v));
+
+const heroStats = [
+  { value: site.stats.yearsExperience, suffix: '+', label: 'Years of experience' },
+  { value: site.stats.brandsCovered, suffix: '+', label: 'Brands covered' },
+  { value: site.stats.locations, suffix: '', label: 'London locations' },
+  { display: String(site.stats.sinceYear), label: 'Established' },
+];
+const fmt = (n: number) => n.toLocaleString('en-GB');
+---
+
+<Layout
+  current="/"
+  title="Left Hand Drive Cars for Sale in London | London LHD Centre"
+  description="Discover London LHD Centre, your premier destination for left hand drive car sales in the UK. Explore our showroom today! | London Left Hand Drive Centre"
+>
+  <!-- ════════ HERO ════════ -->
+  <section class="relative min-h-[100svh] flex flex-col overflow-hidden bg-navy-deep">
+    <div class="hero-slides absolute inset-0" aria-hidden="true">
+      {[1, 2, 3, 4].map((n, i) => (
+        <img src={`/images/home-${n}.jpg`} alt="" class={`hero-slide ${i === 0 ? 'is-active' : ''}`} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} />
+      ))}
+    </div>
+    <div class="absolute inset-0 hero-overlay"></div>
+    <div class="absolute inset-0 hero-mesh opacity-70"></div>
+    <div class="glow-orb" style="width: 460px; height: 460px; top: 8%; left: -130px; background: #C8102E; opacity: 0.2;"></div>
+    <div class="glow-orb" style="width: 420px; height: 420px; bottom: 8%; right: -120px; background: #4F89C2; opacity: 0.34;"></div>
+
+    <div class="relative z-10 flex-1 flex items-center pt-32 pb-10 md:pt-40 md:pb-14">
+      <div class="container-mcp w-full">
+        <div class="max-w-4xl">
+          <div class="flex flex-wrap items-center gap-2 mb-7 fade-in">
+            <span class="pill pill-dark pill-dot">The UK’s leading LHD specialist · Since 1995 · 30+ years</span>
+          </div>
+          <h1 class="heading-display text-white hero-text-shadow text-balance mb-6 fade-in stagger-1">
+            We specialise in buying and selling Left Hand Drive cars
+          </h1>
+          <p class="text-lg md:text-xl text-white/80 hero-text-shadow max-w-2xl leading-relaxed mb-8 text-pretty fade-in stagger-2">
+            We are the UK’s leading left-hand drive car dealer, with over 30 years of experience. We offer a wide range of LHD cars from all major brands, and we can help you find the perfect car for your needs. Whether you are buying or selling, we can provide you with the best possible service.
+          </p>
+          <div class="flex flex-col sm:flex-row flex-wrap gap-3 mb-9 fade-in stagger-3">
+            <a href="/lhd-cars-for-sale" class="btn btn-primary btn-lg">
+              View Latest Stock
+              <Icon name="ArrowRight" size={16} strokeWidth={2.5} />
+            </a>
+            <a href={telLandline} class="btn btn-glass btn-lg">
+              <Icon name="Phone" size={17} strokeWidth={2.3} />
+              Call {site.phoneLandline}
+            </a>
+            <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-whatsapp btn-lg">
+              <Icon name="MessageCircle" size={18} strokeWidth={2.2} />
+              WhatsApp
+            </a>
+          </div>
+          <div class="flex flex-wrap gap-2.5 fade-in stagger-4">
+            {trustSignals.map((t) => (
+              <span class="pill pill-dark">
+                <Icon name="Check" size={13} strokeWidth={3} class="text-red-bright" />
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero stat bar -->
+    <div class="relative z-10 pb-7 md:pb-9">
+      <div class="container-mcp">
+        <div class="glass rounded-3xl grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10 overflow-hidden fade-in">
+          {heroStats.map((s) => (
+            <div class="px-5 py-5 md:px-7 md:py-6">
+              <p class="text-2xl md:text-4xl font-black text-white stat-num">
+                {'value' in s && s.value !== undefined
+                  ? <span data-count={s.value} data-suffix={s.suffix}>{fmt(s.value)}{s.suffix}</span>
+                  : <span>{s.display}</span>}
+              </p>
+              <p class="text-[0.62rem] md:text-[0.7rem] text-white/65 uppercase tracking-widest mt-1.5 font-mono">{s.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <BrandStrip brands={featuredBrands} dark={true} />
+
+  <!-- ════════ LATEST STOCK ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <SectionHeading
+        eyebrow="Latest stock"
+        title="Left-hand drive cars, ready to go."
+        intro="A selection of our current inventory — from everyday LHD runabouts to ultra-premium supercars. Every car is genuine left-hand drive, sourced and prepared by specialists."
+        ctaHref="/lhd-cars-for-sale"
+        ctaLabel="View all stock"
+      />
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 mt-12">
+        {featured.map((v, i) => <VehicleCard vehicle={v} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ BRAND COVERAGE ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <div class="text-center max-w-2xl mx-auto mb-12 fade-in">
+        <span class="eyebrow eyebrow-center mb-5">All major brands</span>
+        <h2 class="heading-lg text-balance mt-1">From Skoda to Ferrari — we cover every tier.</h2>
+        <p class="text-lg text-muted mt-4 text-pretty">Browse our left-hand drive inventory by brand. Mid-range to ultra-premium, all genuine LHD.</p>
+      </div>
+      <div class="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
+        {activeBrands.map((b, i) => (
+          <a href={`/lhd-cars-for-sale/${b.slug}`} class={`card !p-5 flex flex-col items-center justify-center text-center gap-3 group fade-in stagger-${(i % 5) + 1}`}>
+            <BrandMark mark={b.mark} tier={b.tier} size={52} />
+            <span class="font-semibold text-ink text-[0.92rem] leading-tight group-hover:text-red-deep transition">{b.name}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ SELL YOUR CAR + 4 PROMISES ════════ -->
+  <section class="section-navy py-24 md:py-32 relative overflow-hidden">
+    <div class="glow-orb" style="width: 440px; height: 440px; top: -150px; left: -100px; background: #C8102E; opacity: 0.14;"></div>
+    <div class="container-mcp relative">
+      <div class="grid lg:grid-cols-12 gap-12 items-start">
+        <div class="lg:col-span-5 fade-in">
+          <span class="eyebrow eyebrow-light mb-5">Sell your LHD car</span>
+          <h2 class="heading-lg text-white text-balance mb-5">Sell Your Left Hand Drive Car in the UK and Europe for an Instant Payment Today</h2>
+          <p class="text-lg text-white/70 leading-relaxed mb-8 text-pretty">
+            Our team of experts can help you with all aspects of the buying or selling process, from financing to insurance. We also offer a free valuation service, so you can get an idea of how much your car is worth.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href="/lhd-sell-your-car" class="btn btn-primary btn-lg">Get a free valuation<Icon name="ArrowRight" size={16} strokeWidth={2.5} /></a>
+            <a href="/buying-lhd-cars" class="btn btn-glass btn-lg">How it works</a>
+          </div>
+        </div>
+        <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4">
+          {sellingPromises.map((p, i) => (
+            <div class={`card-navy fade-in stagger-${i + 1}`}>
+              <span class="tile-icon tile-icon-red mb-4"><Icon name={p.icon} size={22} strokeWidth={2} /></span>
+              <h3 class="font-bold text-white text-lg mb-2 leading-snug">{p.title}</h3>
+              <p class="text-white/65 text-[0.93rem] leading-relaxed">{p.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ HERITAGE ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="relative fade-in">
+          <div class="relative rounded-[2rem] overflow-hidden border border-line" style="box-shadow: var(--shadow-lift);">
+            <img src="/images/cars/mercedes-sl560.jpg" alt="A classic left-hand drive Mercedes-Benz SL from our inventory" width="1000" height="750" class="w-full aspect-[4/3] object-cover" loading="lazy" />
+            <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 55%, rgba(5,11,20,0.45) 100%);"></div>
+          </div>
+          <div class="absolute -bottom-6 -right-2 md:right-6 glass-light rounded-2xl px-6 py-5 max-w-[15rem]" style="box-shadow: var(--shadow-lift);">
+            <p class="big-number text-ink" style="font-size: clamp(2rem,5vw,2.75rem);"><span data-count={site.stats.yearsExperience} data-suffix="+">{site.stats.yearsExperience}+</span></p>
+            <p class="text-[0.7rem] uppercase tracking-[0.16em] text-muted mt-1 font-mono">Years specialising in LHD cars</p>
+          </div>
+        </div>
+        <div class="fade-in stagger-1">
+          <span class="eyebrow mb-5">Over 30 years in left hand drive</span>
+          <h2 class="heading-lg text-balance mt-1 mb-6">The UK’s most established LHD specialist.</h2>
+          <p class="text-lg text-muted leading-relaxed mb-5 text-pretty">{aboutStory[0]}</p>
+          <p class="text-muted leading-relaxed mb-8 text-pretty">{aboutStory[2]}</p>
+          <a href="/lhd-about-us" class="arrow-link">More about the London LHD Centre</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ TWO LOCATIONS ════════ -->
+  <section class="py-24 md:py-32 section-snow">
+    <div class="container-mcp">
+      <MapBlock />
+    </div>
+  </section>
+
+  <!-- ════════ LATEST NEWS ════════ -->
+  <section class="py-24 md:py-32 bg-white">
+    <div class="container-mcp">
+      <div class="text-center max-w-2xl mx-auto mb-14 fade-in">
+        <span class="eyebrow eyebrow-center mb-5">Latest news</span>
+        <h2 class="heading-lg text-balance mt-1">What’s happening at the LHD Centre.</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        {latestNews.map((n, i) => (
+          <div class={`card-feature group fade-in stagger-${i + 1}`}>
+            <span class="w-14 h-14 rounded-2xl flex items-center justify-center mb-5" style="background: linear-gradient(180deg, #14365A, #0A1929);">
+              <Icon name={n.icon} size={24} strokeWidth={2} class="text-red-bright" />
+            </span>
+            <h3 class="font-bold text-lg text-ink mb-2 leading-snug">{n.title}</h3>
+            <p class="text-muted text-[0.93rem] leading-relaxed">{n.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ReviewsSection dark={true} />
+
+  <CtaBand />
+</Layout>
+
+<style>
+  .hero-slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.4s cubic-bezier(0.4,0,0.2,1); }
+  .hero-slide.is-active { opacity: 1; animation: kenburns 16s ease-in-out infinite alternate; }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-slide.is-active { animation: none; }
+  }
+</style>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.hero-slide'));
+  if (slides.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let i = 0;
+    setInterval(() => {
+      slides[i].classList.remove('is-active');
+      i = (i + 1) % slides.length;
+      slides[i].classList.add('is-active');
+    }, 5500);
+  }
+</script>
