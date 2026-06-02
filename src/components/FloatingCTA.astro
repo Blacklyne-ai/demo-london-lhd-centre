@@ -2,22 +2,22 @@
 import { telLandline, telMobile, whatsappLink, site } from '../data/site';
 import Icon from './Icon.astro';
 ---
-<div class="floating-mobile fixed bottom-3 left-0 right-0 z-40 px-3 gap-2 pointer-events-none">
-  <a href={telLandline} class="btn btn-navy pointer-events-auto flex-1 !px-2 !gap-1.5" style="padding-top:0.8rem;padding-bottom:0.8rem;" aria-label={`Call our landline ${site.phoneLandline}`}>
-    <Icon name="Phone" size={15} strokeWidth={2.3} />
+<div class="floating-mobile fixed bottom-2.5 left-0 right-0 z-40 px-2.5 gap-1.5 pointer-events-none">
+  <a href={telLandline} class="btn btn-navy btn-sm pointer-events-auto flex-1 !gap-1.5" aria-label={`Call our landline ${site.phoneLandline}`}>
+    <Icon name="Phone" size={13} strokeWidth={2.3} />
     <span class="flex flex-col items-start leading-none">
-      <span class="text-[0.58rem] uppercase tracking-wider opacity-70">Landline</span>
-      <span class="text-[0.74rem] font-mono font-semibold">{site.phoneLandline}</span>
+      <span class="text-[0.5rem] uppercase tracking-wider opacity-70">Landline</span>
+      <span class="text-[0.7rem] font-mono font-semibold">{site.phoneLandline}</span>
     </span>
   </a>
-  <a href={telMobile} class="btn btn-primary pointer-events-auto flex-1 !px-2 !gap-1.5" style="padding-top:0.8rem;padding-bottom:0.8rem;" aria-label={`Call our mobile ${site.phoneMobile}`}>
-    <Icon name="Phone" size={15} strokeWidth={2.3} />
+  <a href={telMobile} class="btn btn-primary btn-sm pointer-events-auto flex-1 !gap-1.5" aria-label={`Call our mobile ${site.phoneMobile}`}>
+    <Icon name="Phone" size={13} strokeWidth={2.3} />
     <span class="flex flex-col items-start leading-none">
-      <span class="text-[0.58rem] uppercase tracking-wider opacity-80">Mobile</span>
-      <span class="text-[0.74rem] font-mono font-semibold">{site.phoneMobile}</span>
+      <span class="text-[0.5rem] uppercase tracking-wider opacity-80">Mobile</span>
+      <span class="text-[0.7rem] font-mono font-semibold">{site.phoneMobile}</span>
     </span>
   </a>
-  <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-whatsapp pointer-events-auto !px-3.5" style="padding-top:0.8rem;padding-bottom:0.8rem;" aria-label="Enquire about an LHD car on WhatsApp">
-    <Icon name="MessageCircle" size={19} strokeWidth={2.2} />
+  <a href={whatsappLink} target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm pointer-events-auto !px-3" aria-label="Enquire about an LHD car on WhatsApp">
+    <Icon name="MessageCircle" size={17} strokeWidth={2.2} />
   </a>
 </div>
