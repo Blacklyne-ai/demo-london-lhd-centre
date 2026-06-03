@@ -8,7 +8,7 @@
    the original site) with deep navy authority sections.
 
      navy   #0A1929   established premium-dealer authority (base/text)
-     red    #C8102E   classic racing-red accent — CTAs, SOLD, pricing
+     accent #1E5A9C   logo-blue accent — CTAs, pricing (logo authority)
      steel  #4F89C2   the LONDON logo blue — bright accent on dark
      gold   #D4AF37   ultra-premium tier only (Ferrari/McLaren/RR)
 
@@ -30,11 +30,11 @@
   --rgb-steel: 79 137 194;       /* #4F89C2  the LONDON wordmark blue     */
   --rgb-steel-light: 127 176 222;/* #7FB0DE  lighter steel                */
 
-  /* ── Brand racing-red (canonical) ── */
-  --rgb-red: 200 16 46;          /* #C8102E  primary action accent        */
-  --rgb-red-bright: 225 29 58;   /* #E11D3A  hover / lighter              */
-  --rgb-red-deep: 162 12 35;     /* #A20C23  AA-safe red text on light    */
-  --rgb-red-dark: 126 10 27;     /* #7E0A1B  deepest                      */
+  /* ── Brand accent — derived from the logo's steel-blue (logo authority) ── */
+  --rgb-red: 30 90 156;          /* #1E5A9C  primary action accent (AA on white) */
+  --rgb-red-bright: 79 137 194;  /* #4F89C2  the logo's bright steel-blue */
+  --rgb-red-deep: 15 65 120;     /* #0F4178  deep AA-safe blue text on light */
+  --rgb-red-dark: 8 45 90;       /* #082D5A  deepest blue                  */
 
   /* ── Legacy alias so inherited component classes recolour ── */
   --rgb-orange: var(--rgb-red);
@@ -63,6 +63,8 @@
   --c-navy-ink: rgb(var(--rgb-navy-ink));
   --c-red: rgb(var(--rgb-red));
   --c-red-deep: rgb(var(--rgb-red-deep));
+  --c-accent: rgb(var(--rgb-red));
+  --c-accent-deep: rgb(var(--rgb-red-deep));
   --c-gold: rgb(var(--rgb-gold));
   --c-muted: rgb(var(--rgb-muted));
   --c-border: rgb(var(--rgb-border));
@@ -314,14 +316,14 @@
     letter-spacing: 0.1em; text-transform: uppercase; line-height: 1;
   }
   .badge-available { background: rgb(16 185 129 / 0.12); color: #047857; border: 1px solid rgb(16 185 129 / 0.32); }
-  .badge-sold { background: rgb(var(--rgb-red) / 0.12); color: rgb(var(--rgb-red-deep)); border: 1px solid rgb(var(--rgb-red) / 0.35); }
+  .badge-sold { background: rgb(var(--rgb-muted) / 0.1); color: rgb(var(--rgb-muted)); border: 1px solid rgb(var(--rgb-muted) / 0.3); }
   .badge-call { background: rgb(var(--rgb-gold) / 0.16); color: rgb(var(--rgb-gold-deep)); border: 1px solid rgb(var(--rgb-gold) / 0.42); }
   .badge-tier { background: linear-gradient(180deg, rgb(var(--rgb-gold) / 0.2), rgb(var(--rgb-gold) / 0.08)); color: rgb(var(--rgb-gold-deep)); border: 1px solid rgb(var(--rgb-gold) / 0.4); }
 
   /* price (mono numerals) */
   .price { font-family: var(--font-mono); font-weight: 700; color: rgb(var(--rgb-navy)); letter-spacing: -0.02em; }
   .price-call { color: rgb(var(--rgb-gold-deep)); }
-  .price-sold { color: rgb(var(--rgb-red-deep)); }
+  .price-sold { color: rgb(var(--rgb-muted)); text-decoration: line-through; text-decoration-color: rgb(var(--rgb-muted) / 0.4); }
 
   /* brand monogram mark (fallback) */
   .brand-badge {
@@ -417,7 +419,7 @@
   .service-icon {
     position: absolute; bottom: -22px; left: 1.5rem; width: 52px; height: 52px; border-radius: 14px;
     display: inline-flex; align-items: center; justify-content: center;
-    background: linear-gradient(180deg, #E11D3A, #C8102E); color: #fff;
+    background: rgb(var(--rgb-red)); color: #fff;
     border: 1px solid rgb(255 255 255 / 0.2); box-shadow: 0 10px 24px -8px rgb(var(--rgb-red) / 0.6); z-index: 2;
   }
 
@@ -698,7 +700,7 @@
     background: linear-gradient(180deg, #14365A, #0A1929); color: rgb(var(--rgb-steel-light));
     border: 1px solid rgb(var(--rgb-red) / 0.3); flex-shrink: 0;
   }
-  .tile-icon-orange, .tile-icon-red { background: linear-gradient(180deg, #E11D3A, #C8102E); color: #fff; border-color: rgb(255 255 255 / 0.2); }
+  .tile-icon-orange, .tile-icon-red { background: rgb(var(--rgb-red)); color: #fff; border-color: rgb(255 255 255 / 0.18); }
   .tile-icon-gold { background: linear-gradient(180deg, #E7C969, #D4AF37); color: #1A1407; border-color: rgb(255 255 255 / 0.3); }
 
   /* ════════ FORM FIELDS ════════ */

@@ -9,7 +9,7 @@ const { dark = false } = Astro.props;
     <div class={`relative fade-in stagger-${i + 1} rounded-[1.5rem] p-7 ${dark ? 'card-navy' : 'card-feature'}`}>
       <div class="flex items-center justify-between mb-5">
         <span class={`text-5xl font-black stat-num leading-none ${dark ? 'text-white/12' : 'text-navy/8'}`}>{s.n}</span>
-        <span class={`w-12 h-12 rounded-xl inline-flex items-center justify-center ${dark ? 'tile-icon' : ''}`} style={dark ? '' : 'background: linear-gradient(180deg, #E11D3A, #C8102E); color:#fff;'}>
+        <span class={`w-12 h-12 rounded-xl inline-flex items-center justify-center ${dark ? 'tile-icon' : ''}`} style={dark ? '' : 'background: linear-gradient(180deg, #2F6DA8, #1E5A9C); color:#fff;'}>
           <Icon name={s.icon} size={22} strokeWidth={2} />
         </span>
       </div>
